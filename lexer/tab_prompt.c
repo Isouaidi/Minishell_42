@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 14:44:33 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/03/23 15:41:29 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/03/29 15:24:09 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	tablen(char **tab)
 
 void	getargs(t_stru *stru, char *str)
 {
+	stru->er_quote = 0;
 	stru->args = split_line(str, stru, 0);
 	all_quotes(stru);
 }

@@ -6,31 +6,24 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 14:25:08 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/03/23 00:21:45 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/03/27 17:26:37 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	t_split(char c)
-{
-	if (c == '|')
-		return (c);
-	if (c == '<')
-		return (c);
-	if (c == '>')
-		return (c);
-	return (0);
-}
 
 char	*split_line_part2(char **list, char *str, t_stru *stru)
 {
 	if (t_split(*str) != 0)
 	{
 		if ((*str == '>' && *(str + 1) == '>')
-			|| (*str == '<' && *(str + 1) == '<'))
+			|| (*str == '<' && *(str + 1) == '<')
+			|| (t_split(*str) != 0 && *(str + 1) == '<' && *(str + 2) == '<')
+			|| (t_split(*str) != 0 && *(str + 1) == '>' && *(str + 2) == '>'))
 		{
 			str = redirections(list, str, stru);
+			str = redirections1(list, str, stru);
+			str = redirections2(list, str, stru);
 			return (str);
 		}
 		else
@@ -75,24 +68,48 @@ char	*redirections(char **list, char *str, t_stru *stru)
 	return (str);
 }
 
-char	*other_tok(char **list, char *str, t_stru *stru)
+char	*redirections1(char **list, char *str, t_stru *stru)
 {
-	list[stru->i] = ft_calloc(2, sizeof(char));
-	if (list[stru->i] == NULL)
-		return (NULL);
-	list[stru->i][0] = t_split(*str);
-	list[stru->i][1] = '\0';
-	stru->i++;
-	str++;
-	while (t_split(*str) != 0)
+	if ((t_split(*str) != 0) && *(str + 1) == '<' && *(str + 2) == '<' )
 	{
 		list[stru->i] = ft_calloc(2, sizeof(char));
-		if (list[stru->i] == NULL)
+		if (!list[stru->i])
 			return (NULL);
 		list[stru->i][0] = t_split(*str);
 		list[stru->i][1] = '\0';
 		stru->i++;
-		str++;
+		list[stru->i] = ft_calloc(3, sizeof(char));
+		if (!list[stru->i])
+			return (NULL);
+		list[stru->i][0] = '<';
+		list[stru->i][1] = '<';
+		list[stru->i][2] = '\0';
+		str = str + 3;
+		stru->i++;
+		return (str);
+	}
+	return (str);
+}
+
+char	*redirections2(char **list, char *str, t_stru *stru)
+{
+	if ((t_split(*str) != 0) && *(str + 1) == '>' && *(str + 2) == '>' )
+	{
+		list[stru->i] = ft_calloc(2, sizeof(char));
+		if (!list[stru->i])
+			return (NULL);
+		list[stru->i][0] = t_split(*str);
+		list[stru->i][1] = '\0';
+		stru->i++;
+		list[stru->i] = ft_calloc(3, sizeof(char));
+		if (!list[stru->i])
+			return (NULL);
+		list[stru->i][0] = '>';
+		list[stru->i][1] = '>';
+		list[stru->i][2] = '\0';
+		str = str + 3;
+		stru->i++;
+		return (str);
 	}
 	return (str);
 }

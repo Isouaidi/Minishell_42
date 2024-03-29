@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 22:41:29 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/03/26 17:41:11 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:53:46 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,26 @@ typedef enum e_built
 
 typedef struct s_parser
 {
-	int				intquote;
 	t_token			tokken;
 	t_built			built;
 	char			*val;
 	struct s_parser	*next;
 }	t_parser;
 
+typedef struct s_cmd
+{
+	t_token			tokken;
+	t_built			built;
+	char			**val;
+	struct s_cmd	*next;
+}	t_cmd;
+
 typedef struct s_stru
 {
 	char	**args;
 	int		sizetab;
 	int		er_quote;
+	int		er_tok;
 	int		s;
 	int		d;
 	int		i;
@@ -75,6 +83,7 @@ typedef struct s_stru
 
 // Utils
 void	new_display(void);
+void	free_tab(char **tab);
 
 // Lexer 
 char	update_quote(char quote, char cur);
@@ -85,8 +94,11 @@ char	*split_line_part3(char *str, char *quote);
 char	t_split(char c);
 int		tok(char *str);
 char	*redirections(char **list, char *str, t_stru *stru);
+char	*redirections1(char **list, char *str, t_stru *stru);
+char	*redirections2(char **list, char *str, t_stru *stru);
 char	*other_tok(char **list, char *str, t_stru *stru);
 char	**split_quote(t_stru *stru, char *str);
+void	free_list(char **list);
 
 int		tablen(char **tab);
 void	getargs(t_stru *stru, char *str);
@@ -100,13 +112,15 @@ void	final_part(t_stru *stru, int j, int i);
 void	check_quote(t_stru *stru);
 
 //Parser
-void	printlist(t_parser *list);
+void	printlist(t_cmd *list);
 void	clearlist(t_parser *list);
 t_parser	*pushlist(t_parser *st, char *str);
-void	list_add(t_parser	*list, t_stru *stru);
+void	list_add(t_parser	*list, t_stru *stru, t_cmd *cmd);
 t_token	tokken(t_parser *list);
 t_built	builtines(t_parser *list);
 void	builtines2(t_parser *list);
 void	tok_end_built(t_parser *list);
+void	tokken_erreur(t_parser *list, t_stru *stru);
+void	list_to_cmd(t_parser *list, t_cmd *cmd);
 
 #endif

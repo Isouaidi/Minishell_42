@@ -3,17 +3,20 @@ SRCS =  main.c\
 						quote.c\
 						utils_quote.c\
 						splite.c\
-						utils_splite.c)\
+						utils_splite.c\
+						utils_splite2.c)\
 		$(addprefix builtins/, signal.c)\
 		$(addprefix parser/, list.c\
-							tok_built.c)\
+							tok_built.c\
+							parsing_tok.c\
+							cmd.c)\
 		$(addprefix utils/, utils.c)\
 
 
 OBJS = $(SRCS:.c=.o)
 NAME = minishell
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Iincludes  -g3
+CFLAGS = -Wall -Wextra -Werror -Iincludes  -g3 #-fsanitize=address
 RM = rm -rf
 LIBFT = ./libft
 CINCLUDES	=	-I ./includes

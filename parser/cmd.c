@@ -1,38 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/19 22:42:31 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/03/29 15:18:20 by isouaidi         ###   ########.fr       */
+/*   Created: 2024/03/29 15:34:20 by isouaidi          #+#    #+#             */
+/*   Updated: 2024/03/29 17:57:28 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	sign( int signal)
+void	list_to_cmd(t_parser *list, t_cmd *cmd)
 {
-	if (signal == SIGINT)
+	int i = 0;
+	while (list && list->tokken != pipee)
 	{
-		printf("\n");
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
+		strcpy(cmd->val[i], list->val);
+		i++;
+		list = list->next;
 	}
-	if (signal == SIGQUIT)
-		printf("exit\n");
-}
-
-void	set_signal_action(void)
-{
-	struct sigaction	act;
-
-	bzero(&act, sizeof(act));
-	act.sa_handler = sign;
-	sigaction(SIGINT, &act, NULL);
-	//bzero(&act, sizeof(act));
-	act.sa_handler = SIG_IGN;
-	sigaction(SIGQUIT, &act, NULL);
+	i++;
+	list=list->next;
 }
