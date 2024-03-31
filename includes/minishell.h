@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 22:41:29 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/03/29 17:53:46 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/03/31 19:21:58 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	final_part(t_stru *stru, int j, int i);
 void	check_quote(t_stru *stru);
 
 //Parser
-void	printlist(t_cmd *list);
+void	printlist(t_parser *list);
 void	clearlist(t_parser *list);
 t_parser	*pushlist(t_parser *st, char *str);
 void	list_add(t_parser	*list, t_stru *stru, t_cmd *cmd);
@@ -121,6 +121,10 @@ t_built	builtines(t_parser *list);
 void	builtines2(t_parser *list);
 void	tok_end_built(t_parser *list);
 void	tokken_erreur(t_parser *list, t_stru *stru);
-void	list_to_cmd(t_parser *list, t_cmd *cmd);
+t_cmd	*list_to_cmd(t_parser *list, t_cmd *cmd, int i, int flag);
+void	prompt_cmd(t_cmd *cmd);
+int		count_l(t_parser *list, int flag);
+void	after_pipe(int *flag, t_parser *p, t_parser *c, t_cmd *n);
+void	check_t_b(t_parser *list, t_cmd *cmd);
 
 #endif

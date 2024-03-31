@@ -6,13 +6,13 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:37:26 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/03/29 17:40:47 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/03/31 19:31:14 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	printlist(t_cmd *list)
+void	printlist(t_parser *list)
 {
 	int	i;
 
@@ -21,8 +21,8 @@ void	printlist(t_cmd *list)
 	{
 		printf("----------------------------\n");
 		printf("element [%d]: %s\n" , i, list->val);
-		// printf("tokken [%d] : %d\n", i ,list->tokken);
-		// printf("builtines [%d] : %d\n\n", i ,list->built);
+		printf("tokken [%d] : %d\n", i ,list->tokken);
+		printf("builtines [%d] : %d\n\n", i ,list->built);
 		list = list->next;
 		i++;
 	}
@@ -74,11 +74,16 @@ void	list_add(t_parser *list, t_stru *stru, t_cmd *cmd)
 		}
 		tok_end_built(list);
 		tokken_erreur(list, stru);
-		list_to_cmd(list, cmd);
+		cmd = list_to_cmd(list, cmd, 0, 0);
+		//check_t_b(list, *(&cmd));
 	}
 	stru->er_quote = 0;
 	if (stru->er_tok < 1)
-		printlist(cmd);
-	stru->er_tok = 0;
+		prompt_cmd(cmd);
+	// 	printlist(list);
+	else
+		printf("Token Erreur\n");
+	//if (*(&cmd) != NULL)
+	//stru->er_tok = 0;
 	//clearlist(list);
 }
