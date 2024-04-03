@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:24:31 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/03/27 17:25:15 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/02 16:08:26 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,17 @@ char	*other_tok(char **list, char *str, t_stru *stru)
 		str++;
 	}
 	return (str);
+}
+
+void	pipe_begin(char *str, t_stru *stru)
+{
+	int	i;
+
+	stru->er_pipe = 0;
+	i = 0;
+	while (str[i])
+		i++;
+	i--;
+	if (str[0] == '|' || str[i] == '|')
+		stru->er_pipe = 1;
 }

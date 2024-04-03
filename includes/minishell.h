@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 22:41:29 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/03/31 19:21:58 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:24:28 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_cmd
 {
 	t_token			tokken;
 	t_built			built;
+	t_parser		*redirections;	
 	char			**val;
 	struct s_cmd	*next;
 }	t_cmd;
@@ -74,6 +75,7 @@ typedef struct s_stru
 	int		sizetab;
 	int		er_quote;
 	int		er_tok;
+	int		er_pipe;
 	int		s;
 	int		d;
 	int		i;
@@ -84,6 +86,8 @@ typedef struct s_stru
 // Utils
 void	new_display(void);
 void	free_tab(char **tab);
+int		print_erreur(t_stru *stru);
+int		erreurs(t_stru *stru);
 
 // Lexer 
 char	update_quote(char quote, char cur);
@@ -99,6 +103,7 @@ char	*redirections2(char **list, char *str, t_stru *stru);
 char	*other_tok(char **list, char *str, t_stru *stru);
 char	**split_quote(t_stru *stru, char *str);
 void	free_list(char **list);
+void	pipe_begin(char *str, t_stru *stru);
 
 int		tablen(char **tab);
 void	getargs(t_stru *stru, char *str);
@@ -125,6 +130,11 @@ t_cmd	*list_to_cmd(t_parser *list, t_cmd *cmd, int i, int flag);
 void	prompt_cmd(t_cmd *cmd);
 int		count_l(t_parser *list, int flag);
 void	after_pipe(int *flag, t_parser *p, t_parser *c, t_cmd *n);
-void	check_t_b(t_parser *list, t_cmd *cmd);
+void	check_t(t_parser *list, t_cmd *cmd);
+void	check_b(t_parser *list, t_cmd *cmd);
+void	init_cmd(t_cmd *cmd);
+void	redi(t_parser *list, t_cmd *cmd);
+void	test_prom(t_cmd *cmd);
+void	prev(t_cmd *cmd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:37:26 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/03/31 19:31:14 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/03 13:05:13 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,10 @@ t_parser	*pushlist(t_parser *st, char *str)
 void	list_add(t_parser *list, t_stru *stru, t_cmd *cmd)
 {
 	int	i;
+	t_parser *cpy;
 
 	i = 0;
+	cmd = NULL;
 	stru->er_tok = 0;
 	if (stru->er_quote < 1)
 	{
@@ -72,18 +74,49 @@ void	list_add(t_parser *list, t_stru *stru, t_cmd *cmd)
 			list = pushlist(list, stru->args[i]);
 			i++;
 		}
-		tok_end_built(list);
+		tok_end_built(*(&list));
 		tokken_erreur(list, stru);
 		cmd = list_to_cmd(list, cmd, 0, 0);
-		//check_t_b(list, *(&cmd));
+		cpy = list;
+		//redi(cpy,*(&cmd));
+		//check_t(list, *(&cmd));
+		check_b(cpy, *(&cmd));
+		// test_prom(cmd);
 	}
 	stru->er_quote = 0;
-	if (stru->er_tok < 1)
-		prompt_cmd(cmd);
-	// 	printlist(list);
-	else
-		printf("Token Erreur\n");
-	//if (*(&cmd) != NULL)
-	//stru->er_tok = 0;
-	//clearlist(list);
+	if (print_erreur(stru) < 1)
+	{
+		printlist(list);
+		//printf("9999999999999\n\n");
+		//prompt_cmd(cmd);
+	}
 }
+// if (current->tokken > 1 || t == 1)
+		// {	
+		// 	t = 1;
+		// 	current = cmd->redirections;
+		// 	current = current->next;
+		// 	break;
+		// }	
+
+
+
+// void	get_com(data)
+// {
+// 	t_cmd *tmp;
+// 	int n;
+// 	int i;
+
+// 	n = n_cmd(data.lexer);
+// 	tmp = NULL;
+// 	while (i <= n)
+// 	{
+// 		fonc_redir_in();
+// 		fonct_redir_out(); //acualise ton lexer
+// 		tab
+// 		builtines;
+// 		heredoc;
+		
+// 	}
+	
+// }

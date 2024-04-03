@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:21:29 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/03/30 16:49:39 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/01 16:24:29 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ void	tokken_erreur(t_parser *list, t_stru *stru)
 		while (list->next)
 		{
 			if (list->tokken != 0 && temp->tokken != 0)
-			{
-				// printf("Token Erreur\n");
 				stru->er_tok = 1;
-			}
 			list = list->next;
 			temp = temp->next;
 		}

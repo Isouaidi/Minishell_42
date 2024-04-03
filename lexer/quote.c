@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 19:33:56 by mirio             #+#    #+#             */
-/*   Updated: 2024/03/25 14:24:36 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/01 16:26:07 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,4 @@ void	all_quotes(t_stru *stru)
 		check_quote(stru);
 		i++;
 	}
-	// if (stru->er_quote < 1)
-	// 	print_tab(stru);
-	// stru->er_quote = 0;
 }

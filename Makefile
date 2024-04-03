@@ -10,7 +10,8 @@ SRCS =  main.c\
 							tok_built.c\
 							parsing_tok.c\
 							cmd.c)\
-		$(addprefix utils/, utils.c)\
+		$(addprefix utils/, utils_2.c\
+							utils.c)\
 
 
 OBJS = $(SRCS:.c=.o)

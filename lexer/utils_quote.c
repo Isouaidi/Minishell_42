@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:24:38 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/03/22 14:51:34 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/01 16:27:20 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	check_quote(t_stru *stru)
 {
 	if ((stru->squote % 2 != 0 || stru->dquote % 2 != 0) && stru->er_quote != 1)
 	{
-		printf("check your quote");
+		printf("check your quotes");
 		new_display();
 		stru->er_quote = 2;
 	}
