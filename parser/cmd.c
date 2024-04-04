@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:34:20 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/03 13:02:50 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/04 18:46:33 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ t_cmd	*list_to_cmd(t_parser *list, t_cmd *cmd, int i, int flag)
 	int			count;
 
 	ncmd = malloc(sizeof(t_cmd));
+	//cmd->redirections = malloc(sizeof(t_parser));
 	count = count_l(list, flag);
 	ncmd->val = (char **)malloc(sizeof(char *) * (count + 1));
+	ncmd->redirections = NULL;
 	current = list;
 	while (current && flag != 1)
 	{
@@ -30,8 +32,29 @@ t_cmd	*list_to_cmd(t_parser *list, t_cmd *cmd, int i, int flag)
 			flag = 1;
 			break ;
 		}
-		if (current->tokken > 1 )
-			current = current->next;
+		 if (current->tokken > 1)
+        {
+            t_parser *new_redirection = malloc(sizeof(t_parser));
+            new_redirection->tokken = current->tokken;
+            new_redirection->val = ft_strdup(current->val);
+            new_redirection->next = malloc(sizeof(t_parser));
+			new_redirection->next->tokken = current->next->tokken;
+			new_redirection->next->val = ft_strdup(current->next->val);
+			new_redirection->next->next = NULL;
+
+            if (ncmd->redirections == NULL)
+            {
+                ncmd->redirections = new_redirection;
+            }
+            else
+            {
+                t_parser *temp = ncmd->redirections;
+                while (temp->next != NULL)
+                    temp = temp->next;
+                temp->next = new_redirection;
+            }
+            current = current->next;
+        }
 		else
 		{
 			ncmd->val[i] = ft_strdup(current->val);
@@ -154,6 +177,7 @@ void	check_t(t_parser *list, t_cmd *cmd)
 void	check_b(t_parser *list, t_cmd *cmd)
 {
 	t_parser *temp;
+	init_cmd(cmd);
 	temp = list;
     while (temp)
     {
@@ -171,24 +195,26 @@ void	redi(t_parser *list, t_cmd *cmd)
 {
 
 	t_parser	*tmp;
-	//t_parser	*tmp2;
-	
-	while (list)
+	//int flag = 0;
+	t_parser	*tmp2;
+	tmp = list;
+	while (tmp)
 	{
-		//printf("tok %d\n", list->tokken);
-		if (list->tokken > 1)
+		if (tmp->tokken == 1)
+			cmd = cmd->next;
+		if (tmp->tokken > 1)
 		{
-			tmp = list;
-			if(cmd->redirections == NULL)
-			{
-				tmp->next->next = NULL;
-				cmd->redirections = tmp;
-			}
+			tmp2 = tmp;
+			//tmp2->next->next = NULL;
+			//if(cmd->redirections == NULL)
+			//{
+				
+				cmd->redirections = tmp2;
+				//cmd->next->next->next->redirections = NULL;
+			//}
 			// if(cmd->redirections != NULL)
 			//  	cmd->redirections->next = tmp;
 		}
-		if (list->tokken == 1)
-				cmd = cmd->next;
-		list = list->next;
+		tmp = tmp->next;
 	}
 }

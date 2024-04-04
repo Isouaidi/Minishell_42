@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:37:26 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/03 13:05:13 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/04 18:47:08 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,18 +77,14 @@ void	list_add(t_parser *list, t_stru *stru, t_cmd *cmd)
 		tok_end_built(*(&list));
 		tokken_erreur(list, stru);
 		cmd = list_to_cmd(list, cmd, 0, 0);
-		cpy = list;
-		//redi(cpy,*(&cmd));
-		//check_t(list, *(&cmd));
 		check_b(cpy, *(&cmd));
-		// test_prom(cmd);
 	}
 	stru->er_quote = 0;
 	if (print_erreur(stru) < 1)
 	{
-		printlist(list);
+		//printlist(list);
 		//printf("9999999999999\n\n");
-		//prompt_cmd(cmd);
+		prompt_cmd(cmd);
 	}
 }
 // if (current->tokken > 1 || t == 1)
