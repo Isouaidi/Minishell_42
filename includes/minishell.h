@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 22:41:29 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/03 12:24:28 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/06 09:14:47 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include "../libft/inc/ft_printf.h"
 # include "../libft/inc/get_next_line_bonus.h"
 
-int		main(void);
+int		main(int ac, char **av, char **env);
 void	set_signal_action(void);
 void	sign( int signal);
 
@@ -69,6 +69,14 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
+typedef struct s_env
+{
+	char 			*name;
+	char 			*value;
+	struct s_env	*next;
+}t_env;
+
+
 typedef struct s_stru
 {
 	char	**args;
@@ -76,6 +84,7 @@ typedef struct s_stru
 	int		er_quote;
 	int		er_tok;
 	int		er_pipe;
+	char	**env;
 	int		s;
 	int		d;
 	int		i;
@@ -137,4 +146,6 @@ void	redi(t_parser *list, t_cmd *cmd);
 void	test_prom(t_cmd *cmd);
 void	prev(t_cmd *cmd);
 
+void	print_env(char	**env);
+void	convert_env(t_env *env, t_stru *stru);
 #endif

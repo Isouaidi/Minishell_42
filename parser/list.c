@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:37:26 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/04 18:47:08 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/06 10:29:49 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ t_parser	*pushlist(t_parser *st, char *str)
 void	list_add(t_parser *list, t_stru *stru, t_cmd *cmd)
 {
 	int	i;
-	t_parser *cpy;
 
 	i = 0;
 	cmd = NULL;
@@ -76,43 +75,19 @@ void	list_add(t_parser *list, t_stru *stru, t_cmd *cmd)
 		}
 		tok_end_built(*(&list));
 		tokken_erreur(list, stru);
-		cmd = list_to_cmd(list, cmd, 0, 0);
-		check_b(cpy, *(&cmd));
+		if (stru->er_tok == 0 && stru->er_pipe == 0 && stru->er_quote == 0)
+			{
+				cmd = list_to_cmd(list, cmd, 0, 0);
+				check_b(list, *(&cmd));
+			}
 	}
-	stru->er_quote = 0;
 	if (print_erreur(stru) < 1)
 	{
-		//printlist(list);
-		//printf("9999999999999\n\n");
-		prompt_cmd(cmd);
+	// 	//printlist(list);
+	// 	printf("9999999999999\n\n");
+	 	prompt_cmd(cmd);
+	 	stru->er_quote = 0;
+	 	stru->er_pipe = 0;
+	 	stru->er_tok = 0;
 	}
 }
-// if (current->tokken > 1 || t == 1)
-		// {	
-		// 	t = 1;
-		// 	current = cmd->redirections;
-		// 	current = current->next;
-		// 	break;
-		// }	
-
-
-
-// void	get_com(data)
-// {
-// 	t_cmd *tmp;
-// 	int n;
-// 	int i;
-
-// 	n = n_cmd(data.lexer);
-// 	tmp = NULL;
-// 	while (i <= n)
-// 	{
-// 		fonc_redir_in();
-// 		fonct_redir_out(); //acualise ton lexer
-// 		tab
-// 		builtines;
-// 		heredoc;
-		
-// 	}
-	
-// }

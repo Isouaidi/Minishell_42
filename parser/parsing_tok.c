@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:21:29 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/01 16:24:29 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:29:34 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 void	tokken_erreur(t_parser *list, t_stru *stru)
 {
+	//t_parser	*tmp2;
 	t_parser	*temp;
-
+	
+	//tmp2 = list;
+	if (list->tokken != 0 && list->next == NULL)
+		stru->er_tok = 1;
 	if (list != NULL)
 	{
 		temp = list->next;
@@ -27,4 +31,10 @@ void	tokken_erreur(t_parser *list, t_stru *stru)
 			temp = temp->next;
 		}
 	}
+	if (list->tokken != 0 && list->next == NULL)
+		stru->er_tok = 1;
+	// while (tmp2->tokken == 0 && tmp2)
+	// 	tmp2 = tmp2->next; 
+// 	if (list->tokken != 0 && list->next->tokken == 1)
+// 		stru->er_tok = 1;
 }
