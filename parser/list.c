@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:37:26 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/06 10:29:49 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:51:57 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,10 @@ void	list_add(t_parser *list, t_stru *stru, t_cmd *cmd)
 	}
 	if (print_erreur(stru) < 1)
 	{
-	// 	//printlist(list);
-	// 	printf("9999999999999\n\n");
-	 	prompt_cmd(cmd);
+		doll1(stru);
+		//printlist(list);
+		printf("9999999999999\n\n");
+	 	//prompt_cmd(cmd);
 	 	stru->er_quote = 0;
 	 	stru->er_pipe = 0;
 	 	stru->er_tok = 0;

@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 22:41:29 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/06 09:14:47 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:52:08 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,10 @@ void	init_cmd(t_cmd *cmd);
 void	redi(t_parser *list, t_cmd *cmd);
 void	test_prom(t_cmd *cmd);
 void	prev(t_cmd *cmd);
+void	chaine_env(t_env *en);
 
 void	print_env(char	**env);
 void	convert_env(t_env *env, t_stru *stru);
+void	check_dol(char *str);
+void	doll1(t_stru *stru);
 #endif

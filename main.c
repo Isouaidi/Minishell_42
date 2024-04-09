@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:07:33 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/06 10:37:28 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/09 16:10:04 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ int	main(int ac, char **av, char **env)
 	t_stru		stru;
 	t_parser	*pars;
 	t_cmd		*cmd;
-	t_env		*v_env;
+	//t_env		*v_env;
 	char		*txt;
 	
 	(void)av;
 	stru.env = env;
-	v_env = NULL;
+	//v_env = NULL;
 	pars = NULL;
 	cmd = NULL;
-	convert_env(v_env,&stru);
+	//convert_env(v_env,&stru);
 	if (ac == 1)
 	{
 		set_signal_action();

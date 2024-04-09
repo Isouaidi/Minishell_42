@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 22:42:31 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/03/29 15:18:20 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:07:49 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	set_signal_action(void)
 	bzero(&act, sizeof(act));
 	act.sa_handler = sign;
 	sigaction(SIGINT, &act, NULL);
-	//bzero(&act, sizeof(act));
 	act.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &act, NULL);
 }
