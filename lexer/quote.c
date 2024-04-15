@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 19:33:56 by mirio             #+#    #+#             */
-/*   Updated: 2024/04/01 16:26:07 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/15 18:02:50 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,17 @@ void	all_quotes(t_stru *stru)
 	{
 		solo_quote(stru, 0, i);
 		j = 0;
-		while (stru->args[i][j])
+		if (stru->args != NULL)
 		{
-			if (stru->args[i][j] == '\'' && stru->d == 0 && stru->s == 0)
-				j = simple_q(j, 0, i, stru);
-			else if (stru->args[i][j] == '"' && stru->s == 0 && stru->d == 0)
-				j = double_q(j, 0, i, stru);
-			final_part(stru, j, i);
-			j++;
+			while (stru->args[i][j])
+			{
+				if (stru->args[i][j] == '\'' && stru->d == 0 && stru->s == 0)
+					j = simple_q(j, 0, i, stru);
+				else if (stru->args[i][j] == '"' && stru->s == 0 && stru->d == 0)
+					j = double_q(j, 0, i, stru);
+				final_part(stru, j, i);
+				j++;
+			}
 		}
 		check_quote(stru);
 		i++;

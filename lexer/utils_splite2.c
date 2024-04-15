@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:24:31 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/05 15:53:09 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:11:52 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ void	pipe_begin(char *str, t_stru *stru)
 	while (str[i])
 		i++;
 	i--;
-	if (str[0] == '|' || str[i] == '|')
+	if 	(i > 0)
+	{
+		if (str[0] == '|' || str[i] == '|')
 		stru->er_pipe = 1;
+	}
 }

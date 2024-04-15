@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:34:20 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/05 15:27:40 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:24:45 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,10 @@ void	prompt_cmd(t_cmd *cmd)
 		{
 			i = 0;
 			printf("---------\n");
-			printf("element[%d]\n", j);
+			printf("element chaine (CMD) : [%d]\n", j);
 			printf("builtines [%d] : %d\n", j ,cmd->built);
 			printf("\n");
-			printf("Tab commande :\n");
+			printf("Tab de tab (commande) :\n");
 			while (cmd->val[i])
 			{
 				printf("cmd[%d]: %s\n", i, cmd->val[i]);
@@ -122,13 +122,16 @@ void	prompt_cmd(t_cmd *cmd)
 			}
 			i = 0;
 			printf("\n");
-			printf("redirection :\n");
+			if (cmd->redirections != NULL)
+			{
+			printf("list chaine (redirection) :\n");
 			while (cmd->redirections)
 			{
 					printf("redi val[%d] : %s\n", i ,cmd->redirections->val);
 					printf("redi tok[%d]: %d\n", i ,cmd->redirections->tokken);
 					i++;
 					cmd->redirections = cmd->redirections->next;
+			}
 			}
 			printf("---------\n\n");
 			j ++;

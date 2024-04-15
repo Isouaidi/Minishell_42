@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:37:26 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/09 17:51:57 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/15 18:46:34 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_parser	*pushlist(t_parser *st, char *str)
 	return (st);
 }
 
-void	list_add(t_parser *list, t_stru *stru, t_cmd *cmd)
+t_cmd	*list_add(t_parser *list, t_stru *stru, t_cmd *cmd)
 {
 	int	i;
 
@@ -83,12 +83,14 @@ void	list_add(t_parser *list, t_stru *stru, t_cmd *cmd)
 	}
 	if (print_erreur(stru) < 1)
 	{
-		doll1(stru);
+		doll1(list);
 		//printlist(list);
-		printf("9999999999999\n\n");
+		//printf("9999999999999\n\n");
 	 	//prompt_cmd(cmd);
+		return(cmd);
 	 	stru->er_quote = 0;
 	 	stru->er_pipe = 0;
 	 	stru->er_tok = 0;
 	}
+	return(NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 07:59:10 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/09 18:15:50 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/15 18:44:34 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,28 +105,28 @@ void	check_dol(char *recup)
 		i++;
 	}
 }
-void	doll1(t_stru *stru)
+void	doll1(t_parser *list)
 {
 	int f = 0;
 	int j = 0;
-	int i = 0;
-	while (stru->args[i])
+	while (list)
 	{
-		while (stru->args[i][j] && f != 1)
+		f = 0;
+		j = 0;
+		while (list->val[j] && f != 1)
 		{
-			if (stru->args[i][j] == '$')
+			if (list->val[j] == '$')
 			{	
-				f = 1;	
-				//break;
+				f = 1;
+				break;
 			}	
 			j++;
 		}
 		if (f == 1)
 		{
-			check_dol(stru->args[i]);
+			check_dol(list->val);
 		}
-		f = 0;
-		i++;
+		list = list->next;
 	}
 		
 }

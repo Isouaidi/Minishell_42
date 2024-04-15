@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:52:38 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/02 16:03:15 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:54:15 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	print_erreur(t_stru *stru)
 	}
 	if (erreurs(stru) == 2)
 	{
-		printf("check your tokkens\n");
+		printf("tokkens\n");
 		return (1);
 	}
 	return (0);
