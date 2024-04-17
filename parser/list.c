@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:37:26 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/15 18:46:34 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/16 18:36:53 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_parser	*pushlist(t_parser *st, char *str)
 	return (st);
 }
 
-t_cmd	*list_add(t_parser *list, t_stru *stru, t_cmd *cmd)
+t_cmd	*list_add(t_parser *list, t_stru *stru, t_cmd *cmd, t_env *env)
 {
 	int	i;
 
@@ -75,6 +75,8 @@ t_cmd	*list_add(t_parser *list, t_stru *stru, t_cmd *cmd)
 		}
 		tok_end_built(*(&list));
 		tokken_erreur(list, stru);
+		if (erreurs(stru) == 0)
+		 	convert_env(env, stru, list);
 		if (stru->er_tok == 0 && stru->er_pipe == 0 && stru->er_quote == 0)
 			{
 				cmd = list_to_cmd(list, cmd, 0, 0);
@@ -83,8 +85,8 @@ t_cmd	*list_add(t_parser *list, t_stru *stru, t_cmd *cmd)
 	}
 	if (print_erreur(stru) < 1)
 	{
-		doll1(list);
-		//printlist(list);
+		//doll1(list);
+		printlist(list);
 		//printf("9999999999999\n\n");
 	 	//prompt_cmd(cmd);
 		return(cmd);

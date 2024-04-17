@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:52:38 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/15 14:54:15 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/16 18:30:08 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	print_erreur(t_stru *stru)
 	}
 	if (erreurs(stru) == 2)
 	{
-		printf("tokkens\n");
+		printf("check your tokkens\n");
 		return (1);
 	}
 	return (0);
@@ -43,4 +43,39 @@ void	pipe_end(t_stru *stru, t_parser *list)
 	printf("val = %d\n", list->tokken);
 	if (list->tokken == 1 && list->next->val == NULL)
 		stru->er_pipe = 1;
+}
+char	*ft_mostrjoin(char const *s1, char const *s2, char const *s3)
+{
+	int		i;
+	int		c;
+	char	*result;
+
+	i = 0;
+	c = 0;
+	if (!s1 || !s2)
+		return (0);
+	result = malloc(sizeof(char) * ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3) + 1);
+	if (!result)
+		return (0);
+	while (s1[i])
+	{
+		result[i] = s1[i];
+		i++;
+	}
+	while (s2[c])
+	{
+		result[i] = s2[c];
+		i++;
+		c++;
+	}
+	c  = 0;
+	while (s3[c])
+	{
+		result[i] = s3[c];
+		i++;
+		c++;
+	}
+	
+	result[i] = '\0';
+	return (result);
 }
