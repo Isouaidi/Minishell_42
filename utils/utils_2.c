@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:52:38 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/16 18:30:08 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:05:00 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char	*ft_mostrjoin(char const *s1, char const *s2, char const *s3)
 {
 	int		i;
 	int		c;
+	int		j = 0;
 	char	*result;
 
 	i = 0;
@@ -68,12 +69,11 @@ char	*ft_mostrjoin(char const *s1, char const *s2, char const *s3)
 		i++;
 		c++;
 	}
-	c  = 0;
-	while (s3[c])
+	while (s3[j])
 	{
-		result[i] = s3[c];
+		result[i] = s3[j];
 		i++;
-		c++;
+		j++;
 	}
 	
 	result[i] = '\0';

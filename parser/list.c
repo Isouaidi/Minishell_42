@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:37:26 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/16 18:36:53 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/18 16:56:26 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_cmd	*list_add(t_parser *list, t_stru *stru, t_cmd *cmd, t_env *env)
 	{
 		//doll1(list);
 		printlist(list);
-		//printf("9999999999999\n\n");
+		printf("9999999999999\n\n");
 	 	//prompt_cmd(cmd);
 		return(cmd);
 	 	stru->er_quote = 0;

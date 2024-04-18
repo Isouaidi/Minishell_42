@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 07:59:10 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/17 12:44:44 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/18 19:05:06 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	convert_env(t_env *env, t_stru *stru, t_parser *list)
 	}
 	i = 0;
 	//chaine_env (tes);
-	doll1(list, tes);
+	doll1(list, *(&tes));
 }
 
 void	chaine_env(t_env *en)
@@ -73,6 +73,9 @@ char *check_dol(char *recup, t_env *env)
 {	
 	int i;
 	int j;
+	int q = 0;
+	int f = 0;
+	char quote = 0;
 	char *str;
 	char *apres;
 	char *avant;
@@ -80,72 +83,91 @@ char *check_dol(char *recup, t_env *env)
 
 	j = 0;
 	i = 0;
+	while (recup[q] && f != 1)
+	{
+		quote = update_quote(quote, recup[q]);
+		if (recup[q] == '$')
+		{
+			f = 1;
+			break;
+		}
+		q++;
+	}
 	while (recup[i])
 	{
+		//avant = ft_strdup("");
 		avant = malloc(sizeof(char) * (ft_strlen(recup + 1)));
 		while (recup[i] != '$' && recup[i])
 		{
 			avant[j++] = recup[i++];		
 		}
 		avant[j] = '\0';
-		printf("print 0 = %s\n", avant);
+		
+		//printf("quote 0 %c [%d]\n",quote, i);
+		//printf("print AVANT [%d] = %s\n",i ,avant);
 		j = 0;
-		if(recup[i] == '$')
+		if(recup[i] == '$' && quote != '\'')
 		{
-			va = malloc(sizeof(char) * (ft_strlen(recup + 1)));
 			i++;
+			//va = ft_strdup("");
+			va = malloc(sizeof(char) * (ft_strlen(recup + 1)));
 			while (recup[i] && recup[i] != '"' && recup[i] != ' ' && recup[i] != '$')
 			{
-				// if ( recup[i] == '$')
-				// 	i++;
+				//quote = update_quote(quote, recup[i]);
 				va[j++] = recup[i++];
 			}
-			//break;
 			va[j] = '\0';
-			printf("print 10 = %s\n", va);
+			//printf("va avant [%d] = %s\n",i, va);
 			va = check_dollars(va, env);
-			printf("print 1 = %s\n", va);
+			//printf("va apres [%d]= %s\n",i, va);
 		}
 			j = 0;
 			apres = malloc(sizeof(char) * (ft_strlen(recup + 1)));
 			while (recup[i])
 				apres[j++] = recup[i++];
 			apres[j] = '\0';
-			printf("print 2 = %s\n\n", apres);
-		i++;
+			//printf("print APRES [%d] = %s\n\n",i, apres);
 	}
-	printf("print final0 = %s\n", avant);
-	printf("print final1 = %s\n", va);
-	printf("print final2 = %s\n\n", apres);
+	//printf("---------------------------\n");
+	//printf("print avant = %s\n", avant);
+	//printf("print va = %s\n", va);
+	//printf("print apres = %s\n\n", apres);
+	
 	str = ft_mostrjoin(avant, va, apres);
+	free(avant);
+	free(apres);
+	free(va);
+	//printf("print complete = %s\n\n", str);
 	return(str);
 }
 void	doll1(t_parser *list, t_env *env)
 {
-	int f = 0;
+	//int f = 0;
 	int j = 0;
-//	int sq = 0;
+	char quote = 0;
 	while (list)
 	{
-		f = 0;
+	//	f = 0;
 		j = 0;
 		while (list->val[j])
 		{
-			f = 0;
-			j = 0;
-			while (list->val[j] && f != 1)
-			{
+			//f = 0;
+			//j = 0;
+			//while (list->val[j] && f != 1)
+			//{
+				quote = update_quote(quote, list->val[j]);
 				if (list->val[j] == '$')
 				{	
-					f = 1;
-					break;
+					list->val = check_dol(list->val, env);
+			//		f = 1;
+				//	break;
 				}	
 				j++;
-			}
-			if (f == 1)
-			{
-				list->val = check_dol(list->val, env); 
-			}
+			//}
+			// if (f == 1)
+			// {
+			// 	//printf("list === %s\n", list->val);
+			// }
 		}
 		list = list->next;
 	}
@@ -162,12 +184,8 @@ char	*check_dollars(char *str, t_env *env)
 	va = ft_strdup("");
 	while (env)
 	{
-		//printf("debug00\n");
-		//printf("$ = %s\n", str);
-		//printf("$ in env = %s\n\n", env->name);
 		if (ft_strcmp(str, env->name) == 0)
 		{
-			printf("debug01\n");
 			va = malloc(sizeof(char) * ft_strlen(env->value + 1));
 			while (env->value[i])
 				va[j++] = env->value[i++];
