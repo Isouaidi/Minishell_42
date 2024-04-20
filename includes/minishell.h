@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 22:41:29 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/18 18:10:22 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/20 14:34:53 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ void	print_env(char	**env);
 void	convert_env(t_env *env, t_stru *stru, t_parser *list);
 char	*check_dol(char *str, t_env *env);
 void	doll1(t_parser *list, t_env *env);
-char 	*check_dollars(char *str, t_env *env);
+char 	*check_dollars(char *str, t_env *env, char quote);
 char	*ft_mostrjoin(char const *s1, char const *s2, char const *s3);
 
 #endif
