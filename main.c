@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:07:33 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/16 17:28:46 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/24 20:59:10 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(int ac, char **av, char **env)
 			if (txt_null(txt) == 1)
 				break ;
 			getargs(&stru, txt);
-			cmd = list_add(pars, &stru, cmd, v_env);
+			cmd = list_add(pars, &stru, cmd, &v_env);
 			//prompt_cmd(cmd);
 			free_tab(stru.args);
 			add_history(txt);

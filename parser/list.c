@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:37:26 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/18 16:56:26 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/26 19:12:09 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_parser	*pushlist(t_parser *st, char *str)
 	return (st);
 }
 
-t_cmd	*list_add(t_parser *list, t_stru *stru, t_cmd *cmd, t_env *env)
+t_cmd	*list_add(t_parser *list, t_stru *stru, t_cmd *cmd, t_env **env)
 {
 	int	i;
 
@@ -76,7 +76,17 @@ t_cmd	*list_add(t_parser *list, t_stru *stru, t_cmd *cmd, t_env *env)
 		tok_end_built(*(&list));
 		tokken_erreur(list, stru);
 		if (erreurs(stru) == 0)
-		 	convert_env(env, stru, list);
+		{
+		 	*env = convert_env(*env, stru, *(&list));
+			supquote(*(&list));
+			//*env = push_back_list(*env, "ilyes", "moi");
+			//built_env(*env);
+			//sorted_insertion(env);
+			*env = push_back_list(*env, "USER", "non");
+			*env = export_solo(*env);
+			//chaine_env(*env);
+			
+		}
 		if (stru->er_tok == 0 && stru->er_pipe == 0 && stru->er_quote == 0)
 			{
 				cmd = list_to_cmd(list, cmd, 0, 0);
@@ -86,9 +96,9 @@ t_cmd	*list_add(t_parser *list, t_stru *stru, t_cmd *cmd, t_env *env)
 	if (print_erreur(stru) < 1)
 	{
 		//doll1(list);
-		printlist(list);
-		printf("9999999999999\n\n");
-	 	//prompt_cmd(cmd);
+		//printlist(list);
+		//printf("9999999999999\n\n");
+	 	prompt_cmd(cmd);
 		return(cmd);
 	 	stru->er_quote = 0;
 	 	stru->er_pipe = 0;

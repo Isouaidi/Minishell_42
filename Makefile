@@ -4,8 +4,10 @@ SRCS =  main.c\
 						utils_quote.c\
 						splite.c\
 						utils_splite.c\
+						sup_quote.c\
 						utils_splite2.c)\
 		$(addprefix builtins/, signal.c\
+								export.c\
 								env.c)\
 		$(addprefix parser/, list.c\
 							tok_built.c\
@@ -18,7 +20,7 @@ SRCS =  main.c\
 OBJS = $(SRCS:.c=.o)
 NAME = minishell
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Iincludes  -g3 #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Iincludes  -g3 -fsanitize=address
 RM = rm -rf
 LIBFT = ./libft
 CINCLUDES	=	-I ./includes
@@ -42,7 +44,7 @@ NBR_COMPILER = ${shell expr 100 \* ${FICH_COUNT} / ${NBR_TOT_FICHIER}}
 BAR =  ${shell expr 23 \* ${FICH_COUNT} / ${NBR_TOT_FICHIER}}
 
 
-${MAIN_PATH}%.o:%.c .
+${MAIN_PATH}%.o:%.c 
 	@${eval FICH_COUNT = ${shell expr ${FICH_COUNT} + 1}}
 	@${CC} ${CFLAGS} -c -I . $< -o ${<:.c=.o}
 	@echo ""
