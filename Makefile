@@ -8,6 +8,7 @@ SRCS =  main.c\
 						utils_splite2.c)\
 		$(addprefix builtins/, signal.c\
 								export.c\
+								unset.c\
 								env.c)\
 		$(addprefix parser/, list.c\
 							tok_built.c\

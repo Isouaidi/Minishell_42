@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 22:41:29 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/26 18:53:35 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/26 19:48:29 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,5 +170,7 @@ void	supquote(t_parser *list);
 void	remove_character_at_position(char *str, int pos);
 void    is_in(char *in, char c);
 void    delete(char *str);
+void	ft_lstadd_front(t_env **lst, t_env *new);
+t_env	*unset(t_env *env, char *str);
 
 #endif
