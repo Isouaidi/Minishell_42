@@ -13,15 +13,17 @@ SRCS =  main.c\
 		$(addprefix parser/, list.c\
 							tok_built.c\
 							parsing_tok.c\
+							cmd_2.c\
 							cmd.c)\
 		$(addprefix utils/, utils_2.c\
+							utils_3.c\
 							utils.c)\
 
 
 OBJS = $(SRCS:.c=.o)
 NAME = minishell
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Iincludes  -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Iincludes  -g3 #-fsanitize=leak
 RM = rm -rf
 LIBFT = ./libft
 CINCLUDES	=	-I ./includes

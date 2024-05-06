@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:52:38 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/18 14:05:00 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/28 17:52:21 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	print_erreur(t_stru *stru)
 	}
 	return (0);
 }
+
 void	pipe_end(t_stru *stru, t_parser *list)
 {
 	while (list->next != NULL)
@@ -44,18 +45,21 @@ void	pipe_end(t_stru *stru, t_parser *list)
 	if (list->tokken == 1 && list->next->val == NULL)
 		stru->er_pipe = 1;
 }
+
 char	*ft_mostrjoin(char const *s1, char const *s2, char const *s3)
 {
 	int		i;
 	int		c;
-	int		j = 0;
+	int		j;
 	char	*result;
 
+	j = 0;
 	i = 0;
 	c = 0;
 	if (!s1 || !s2)
 		return (0);
-	result = malloc(sizeof(char) * ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3) + 1);
+	result = malloc(sizeof(char) * ft_strlen(s1) + ft_strlen(s2)
+			+ ft_strlen(s3) + 1);
 	if (!result)
 		return (0);
 	while (s1[i])
@@ -64,18 +68,9 @@ char	*ft_mostrjoin(char const *s1, char const *s2, char const *s3)
 		i++;
 	}
 	while (s2[c])
-	{
-		result[i] = s2[c];
-		i++;
-		c++;
-	}
+		result[i++] = s2[c++];
 	while (s3[j])
-	{
-		result[i] = s3[j];
-		i++;
-		j++;
-	}
-	
+		result[i++] = s3[j++];
 	result[i] = '\0';
 	return (result);
 }

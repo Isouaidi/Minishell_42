@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 22:41:29 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/26 19:48:29 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/28 19:57:51 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,10 @@ typedef struct s_cmd
 
 typedef struct s_env
 {
-	char 			*name;
-	char 			*value;
+	char			*name;
+	char			*value;
 	struct s_env	*next;
-}t_env;
-
+}	t_env;
 
 typedef struct s_stru
 {
@@ -98,6 +97,8 @@ void	new_display(void);
 void	free_tab(char **tab);
 int		print_erreur(t_stru *stru);
 int		erreurs(t_stru *stru);
+void	clear_env(t_env *list);
+void	clear_cmd(t_cmd *list);
 
 // Lexer 
 char	update_quote(char quote, char cur);
@@ -136,7 +137,7 @@ t_built	builtines(t_parser *list);
 void	builtines2(t_parser *list);
 void	tok_end_built(t_parser *list);
 void	tokken_erreur(t_parser *list, t_stru *stru);
-t_cmd	*list_to_cmd(t_parser *list, t_cmd *cmd, int i, int flag);
+t_cmd	*list_to_cmd(t_parser *list, t_cmd *cmd, int flag);
 void	prompt_cmd(t_cmd *cmd);
 int		count_l(t_parser *list, int flag);
 void	after_pipe(int *flag, t_parser *p, t_parser *c, t_cmd *n);
@@ -147,6 +148,10 @@ void	redi(t_parser *list, t_cmd *cmd);
 void	test_prom(t_cmd *cmd);
 void	prev(t_cmd *cmd);
 void	chaine_env(t_env *en);
+t_parser	*in_list(t_parser *current, t_parser	*new_redirection);
+void		in_list2(t_parser *new_redirection, t_cmd *ncmd);
+t_parser	*in_list3(t_cmd *cmd, t_parser *cur, t_parser *redi);
+t_cmd	*declaration(t_cmd *ncmd, t_parser *redir, t_parser *current, int *flag);
 
 //ENV
 void	print_env(char	**env);
@@ -170,7 +175,8 @@ void	supquote(t_parser *list);
 void	remove_character_at_position(char *str, int pos);
 void    is_in(char *in, char c);
 void    delete(char *str);
-void	ft_lstadd_front(t_env **lst, t_env *new);
+
+//unset
 t_env	*unset(t_env *env, char *str);
 
 #endif

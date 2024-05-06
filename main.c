@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:07:33 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/24 20:59:10 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/28 18:59:55 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,11 @@ int	main(int ac, char **av, char **env)
 	v_env = NULL;
 	pars = NULL;
 	cmd = NULL;
-	//convert_env(v_env , &stru);
 	if (ac == 1)
 	{
 		set_signal_action();
 		while (1)
 		{
-			
 			txt = readline("Minishell >> ");
 			if (txt_null(txt) == 1)
 				break ;
@@ -51,7 +49,10 @@ int	main(int ac, char **av, char **env)
 			free_tab(stru.args);
 			add_history(txt);
 			free(txt);
+			//clearlist(pars);
+			//clear_cmd(cmd);
 		}
+		//clear_env(v_env);
 	}
 	return (0);
 }

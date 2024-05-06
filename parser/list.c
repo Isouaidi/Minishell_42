@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:37:26 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/26 20:00:57 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/28 18:41:02 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	printlist(t_parser *list)
 	while (list != NULL)
 	{
 		printf("----------------------------\n");
-		printf("element [%d]: %s\n" , i, list->val);
-		printf("tokken [%d] : %d\n", i ,list->tokken);
-		printf("builtines [%d] : %d\n\n", i ,list->built);
+		printf("element [%d]: %s\n", i, list->val);
+		printf("tokken [%d] : %d\n", i, list->tokken);
+		printf("builtines [%d] : %d\n\n", i, list->built);
 		list = list->next;
 		i++;
 	}
@@ -77,33 +77,36 @@ t_cmd	*list_add(t_parser *list, t_stru *stru, t_cmd *cmd, t_env **env)
 		tokken_erreur(list, stru);
 		if (erreurs(stru) == 0)
 		{
-		 	*env = convert_env(*env, stru, *(&list));
+			*env = convert_env(*env, stru, *(&list));
 			supquote(*(&list));
 			//*env = push_back_list(*env, "ilyes", "moi");
 			//built_env(*env);
 			//sorted_insertion(env);
 			//*env = push_back_list(*env, "ilyes", "non");
-			*env = unset(*env, "CHROME_DESKTOP");
-			*env = export_solo(*env);
+			//*env = unset(*env, "CHROME_DESKTOP");
+			//*env = export_solo(*env);
 			//chaine_env(*env);
-			
+			//clear_env(*env);
 		}
 		if (stru->er_tok == 0 && stru->er_pipe == 0 && stru->er_quote == 0)
-			{
-				cmd = list_to_cmd(list, cmd, 0, 0);
-				check_b(list, *(&cmd));
-			}
+		{
+			cmd = list_to_cmd(list, cmd, 0, 0);
+			check_b(list, *(&cmd));
+			//clearlist(*(&list));
+			//clear_cmd(*(&cmd));
+			//clear_env(**(&env));
+		}
 	}
 	if (print_erreur(stru) < 1)
 	{
 		//doll1(list);
 		//printlist(list);
 		//printf("9999999999999\n\n");
-	 	prompt_cmd(cmd);
-		return(cmd);
-	 	stru->er_quote = 0;
-	 	stru->er_pipe = 0;
-	 	stru->er_tok = 0;
+		prompt_cmd(cmd);
+		return (cmd);
+		stru->er_quote = 0;
+		stru->er_pipe = 0;
+		stru->er_tok = 0;
 	}
 	return(NULL);
 }

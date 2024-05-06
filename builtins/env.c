@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 07:59:10 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/26 19:42:47 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/28 18:31:01 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,31 +16,44 @@ t_env	*convert_env(t_env *env, t_stru *stru, t_parser *list)
 {
 	int i;
 	//int j;
-	char **split;
+	char **splite;
 	t_env *tes;
 
 	i = 0;
 	tes = env;
-	if (env == NULL) {
+	if (env == NULL)
+	{
 		env = malloc(sizeof(t_env));
+		if (!env)
+			return(NULL);
 		tes = env;
 		while (stru->env[i])
 		{
-			split = ft_split(stru->env[i], '=');
-			env->name = ft_strdup(split[0]);
-			if (split[1])
-				env->value = ft_strdup(split[1]);
+			splite = ft_split(stru->env[i], '=');
+			if (splite[0])
+				env->name = ft_strdup(splite[0]);
+			if (splite[1])
+				env->value = ft_strdup(splite[1]);
 			else
 				env->value = NULL;
+			free_tab(splite);
 			if (stru->env[i + 1] == NULL)
 				env->next = NULL;
 			else
+			{
 				env->next = malloc(sizeof(t_env));
-			free(split);
+				if (!env->next)
+				{
+					clear_env(tes);
+					return(NULL);
+				}
+			}
 			env = env->next;
 			i++;
 		}
 	}
+	//free(splite);
+	//free_tab(splite);
 	//export_env()
 	doll1(list, tes);
 	//tes = push_back_list(tes, "ilyes", "moi");
@@ -134,9 +147,9 @@ char *check_dol(char *recup, t_env *env)
 
 void	doll1(t_parser *list, t_env *env)
 {
-	int j;
-	char quote;
-	
+	int		j;
+	char	quote;
+
 	j = 0;
 	quote = 0;
 	while (list)
@@ -144,21 +157,20 @@ void	doll1(t_parser *list, t_env *env)
 		j = 0;
 		while (list->val[j])
 		{
-				quote = update_quote(quote, list->val[j]);
-				if (list->val[j] == '$')
-					list->val = check_dol(list->val, env);
-				j++;
+			quote = update_quote(quote, list->val[j]);
+			if (list->val[j] == '$')
+				list->val = check_dol(list->val, env);
+			j++;
 		}
 		list = list->next;
 	}
-		
 }
 
 char	*check_dollars(char *str, t_env *env)
 {
-	char *va;
-	int i;
-	int j;
+	char	*va;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
@@ -170,7 +182,7 @@ char	*check_dollars(char *str, t_env *env)
 			va = malloc(sizeof(char) * ft_strlen(env->value + 1));
 			while (env->value[i])
 				va[j++] = env->value[i++];
-			va[j] = '\0';		
+			va[j] = '\0';
 		}
 		env = env->next;
 	}
@@ -201,8 +213,8 @@ t_env *push_back_list(t_env *env, char *str, char *str2)
 	
 	before = check;
 	element = malloc(sizeof(t_env));
-	element->name = strdup(str);
-	element->value = strdup(str2);
+	element->name = ft_strdup(str);
+	element->value = ft_strdup(str2);
 	element->next = NULL;
 
 	while (check)
@@ -210,6 +222,7 @@ t_env *push_back_list(t_env *env, char *str, char *str2)
 		if (ft_strcmp(check->name, element->name) == 0)
 		{
 			check->value = element->value;
+			free(element->name);
 			f = 1;
 		}
 		check = check->next;
@@ -223,6 +236,5 @@ t_env *push_back_list(t_env *env, char *str, char *str2)
 
 		temp->next = element;
 	}
-	
 	return (env);
 }

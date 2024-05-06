@@ -6,21 +6,22 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:34:20 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/15 14:24:45 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/04/28 20:04:09 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_cmd	*list_to_cmd(t_parser *list, t_cmd *cmd, int i, int flag)
+t_cmd	*list_to_cmd(t_parser *list, t_cmd *cmd, int flag)
 {
 	t_cmd		*ncmd;
 	t_parser	*current;
 	t_parser	*pipe_start;
+	t_parser	*new_redirection;
 	int			count;
+	int	i = 0;
 
 	ncmd = malloc(sizeof(t_cmd));
-	//cmd->redirections = malloc(sizeof(t_parser));
 	count = count_l(list, flag);
 	ncmd->val = (char **)malloc(sizeof(char *) * (count + 1));
 	ncmd->redirections = NULL;
@@ -30,31 +31,11 @@ t_cmd	*list_to_cmd(t_parser *list, t_cmd *cmd, int i, int flag)
 		if (current->tokken == 1)
 		{
 			flag = 1;
-			break ;
+			break;
 		}
-		 if (current->tokken > 1)
-        {
-            t_parser *new_redirection = malloc(sizeof(t_parser));
-            new_redirection->tokken = current->tokken;
-            new_redirection->val = ft_strdup(current->val);
-            new_redirection->next = malloc(sizeof(t_parser));
-			new_redirection->next->tokken = current->next->tokken;
-			new_redirection->next->val = ft_strdup(current->next->val);
-			new_redirection->next->next = NULL;
-
-            if (ncmd->redirections == NULL)
-            {
-                ncmd->redirections = new_redirection;
-            }
-            else
-            {
-                t_parser *temp = ncmd->redirections;
-                while (temp->next != NULL)
-                    temp = temp->next;
-                temp->next = new_redirection;
-            }
-            current = current->next;
-        }
+		if (current->tokken > 1)
+			new_redirection = in_list3(*(&ncmd), *(&current),
+					*(&new_redirection));
 		else
 		{
 			ncmd->val[i] = ft_strdup(current->val);
@@ -93,7 +74,7 @@ void	after_pipe(int *flag, t_parser *p, t_parser *c, t_cmd *n)
 	if ((*flag) == 1 && c != NULL)
 	{
 		p = c->next;
-		n->next = list_to_cmd(p, NULL, 0, 0);
+		n->next = list_to_cmd(p, NULL, 0);
 	}
 	else
 		n->next = NULL;
