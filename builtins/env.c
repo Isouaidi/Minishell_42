@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 07:59:10 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/28 18:31:01 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/05/08 21:30:04 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 t_env	*convert_env(t_env *env, t_stru *stru, t_parser *list)
 {
-	int i;
-	//int j;
-	char **splite;
-	t_env *tes;
+	int		i;
+	char	**splite;
+	t_env	*tes;
 
 	i = 0;
 	tes = env;
@@ -25,125 +24,111 @@ t_env	*convert_env(t_env *env, t_stru *stru, t_parser *list)
 	{
 		env = malloc(sizeof(t_env));
 		if (!env)
-			return(NULL);
+			return (NULL);
 		tes = env;
 		while (stru->env[i])
 		{
-			splite = ft_split(stru->env[i], '=');
-			if (splite[0])
-				env->name = ft_strdup(splite[0]);
-			if (splite[1])
-				env->value = ft_strdup(splite[1]);
-			else
-				env->value = NULL;
-			free_tab(splite);
-			if (stru->env[i + 1] == NULL)
-				env->next = NULL;
-			else
-			{
-				env->next = malloc(sizeof(t_env));
-				if (!env->next)
-				{
-					clear_env(tes);
-					return(NULL);
-				}
-			}
+			splite = env00(splite, *(&env), &i, stru);
+			if (splite == NULL)
+				return (NULL);
 			env = env->next;
 			i++;
 		}
 	}
-	//free(splite);
-	//free_tab(splite);
-	//export_env()
 	doll1(list, tes);
-	//tes = push_back_list(tes, "ilyes", "moi");
-	//new_env(*(&tes), (*(&stru)));
-	//chaine_env(tes);
-	//built_env(tes);
 	return (tes);
 }
 
 void	chaine_env(t_env *en)
 {
-	int i; 
+	int	i;
 
 	i = 0;
 	while (en)
 	{
-		printf("name[%d] = %s\n",i, en->name);
-		printf("value[%d] = %s\n\n",i, en->value);
+		printf("name[%d] = %s\n", i, en->name);
+		printf("value[%d] = %s\n\n", i, en->value);
 		i++;
 		en = en->next;
-	} 	
+	}
 }
-char *check_dol(char *recup, t_env *env)
-{	
-	int i;
-	int j;
-	int d = 0;
-	char quote = 0;
-	char *str;
-	char *apres;
-	char *avant;
-	char *va;
 
-	j = 0;
-	i = 0;
+char	*check_dol(char *recup, t_env *env, int i, int j)
+{
+	int		d;
+	char	quote;
+	char	*apres;
+	char	*avant;
+	char	*va;
+
+	quote = 0;
+	d = 0;
 	while (recup[i])
-	{	
+	{
 		avant = malloc(sizeof(char) * (ft_strlen(recup + 1)));
-		while (recup[i] && d != 1 )
+		while (recup[i] && d != 1)
 		{
-				quote = update_quote(quote, recup[i]);
-				if (recup[i] == '$' && quote != '\'')
-				{
-					d = 1;
-					break;
-				}				
-				avant[j++] = recup[i++];
+			quote = update_quote(quote, recup[i]);
+			if (recup[i] == '$' && quote != '\'')
+			{
+				d = 1;
+				break ;
+			}
+			avant[j++] = recup[i++];
 		}
 		avant[j] = '\0';
-		if (recup[i] == '\0') 
+		if (recup[i] == '\0')
 		{
 			va = ft_strdup("");
-			d = 1;		
+			d = 1;
 		}
 		if (recup[i] != '\0')
 			d = 0;
 		j = 0;
-		if ((recup[i] == '$' && recup[i + 1] == '\0') 
-			|| ( recup[i + 1] == '"' && recup[i] == '$' && recup[i + 1] == '"' ))
-				va = ft_strdup("$");	
-		else if(recup[i] == '$' && d == 0 )
+		if ((recup[i] == '$' && recup[i + 1] == '\0')
+			|| (recup[i + 1] == '"' && recup[i] == '$' && recup[i + 1] == '"' ))
+			va = ft_strdup("$");
+		else if (recup[i] == '$' && d == 0)
 		{
 			d = 0;
 			va = malloc(sizeof(char) * (ft_strlen(recup + 1)));
 			i++;
-			while (recup[i] && recup[i] != '"' && recup[i] != '\'' && recup[i] != ' ' && recup[i] != '$')
-				{
-					quote = update_quote(quote, recup[i]);
-					va[j++] = recup[i++];
-				}
-				va[j] = '\0';
-					va = check_dollars(va, env);
-		}
-			d = 0;
-			j = 0;
-			apres = malloc(sizeof(char) * (ft_strlen(recup + 1)));
-			while (recup[i])
+			while (recup[i] && recup[i] != '"' && recup[i] != '\''
+				&& recup[i] != ' ' && recup[i] != '$')
 			{
 				quote = update_quote(quote, recup[i]);
-				apres[j++] = recup[i++];
+				va[j++] = recup[i++];
 			}
-			apres[j] = '\0';
+			va[j] = '\0';
+			va = check_dollars(va, env);
+		}
+		d = 0;
+		j = 0;
+		apres = malloc(sizeof(char) * (ft_strlen(recup + 1)));
+		while (recup[i])
+		{
 			quote = update_quote(quote, recup[i]);
+			apres[j++] = recup[i++];
+		}
+		apres[j] = '\0';
+		quote = update_quote(quote, recup[i]);
 	}
-	str = ft_mostrjoin(avant, va, apres);
-	free(avant);
-	free(apres);
-	free(va);
-	return(str);
+	return (ft_mostrjoin(avant, va, apres));
 }
+
+// char	*check_dol(char *recup, t_env *env, int i)
+// {
+// 	char	quote;
+// 	char	*avant;
+// 	char	*va;
+// 	char	*apres;
+
+// 	quote = 0;
+// 	avant = parse_before_dollar(recup, &i, quote);
+// 	va = parse_after_dollar(recup, &i, env, quote);
+// 	apres = parse_after(recup, &i, quote);
+// 	return (ft_mostrjoin(avant, va, apres));
+// }
 
 void	doll1(t_parser *list, t_env *env)
 {
@@ -159,7 +144,7 @@ void	doll1(t_parser *list, t_env *env)
 		{
 			quote = update_quote(quote, list->val[j]);
 			if (list->val[j] == '$')
-				list->val = check_dol(list->val, env);
+				list->val = check_dol(list->val, env, 0, 0);
 			j++;
 		}
 		list = list->next;
@@ -186,12 +171,12 @@ char	*check_dollars(char *str, t_env *env)
 		}
 		env = env->next;
 	}
-	return(va);
+	return (va);
 }
 
-void built_env(t_env *env)
+void	built_env(t_env *env)
 {
-	while(env)
+	while (env)
 	{
 		printf("%s", env->name);
 		printf("=");
@@ -203,20 +188,22 @@ void built_env(t_env *env)
 	}
 	printf("\n");
 }
-t_env *push_back_list(t_env *env, char *str, char *str2)
+
+t_env	*push_back_list(t_env *env, char *str, char *str2)
 {
-	t_env *element;
-	t_env *check = env;
-	t_env *temp;
-	t_env *before;
-	int f = 0;
-	
+	t_env	*element;
+	t_env	*check;
+	t_env	*temp;
+	t_env	*before;
+	int		f;
+
+	check = env;
+	f = 0;
 	before = check;
 	element = malloc(sizeof(t_env));
 	element->name = ft_strdup(str);
 	element->value = ft_strdup(str2);
 	element->next = NULL;
-
 	while (check)
 	{
 		if (ft_strcmp(check->name, element->name) == 0)
@@ -229,11 +216,9 @@ t_env *push_back_list(t_env *env, char *str, char *str2)
 	}
 	temp = before;
 	if (f == 0)
-	{	
-		
-		while(temp->next != NULL)
+	{
+		while (temp->next != NULL)
 			temp = temp->next;
-
 		temp->next = element;
 	}
 	return (env);

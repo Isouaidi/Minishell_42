@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:43:22 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/28 19:56:59 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:50:57 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,44 +24,45 @@ t_parser	*in_list(t_parser *current, t_parser	*new_redirection)
 	return (new_redirection);
 }
 
-void	in_list2(t_parser *new_redirection, t_cmd *ncmd)
+t_parser	*in_list3(t_cmd *cmd, t_parser *cur, t_parser *redi)
 {
 	t_parser	*temp;
 
-	temp = ncmd->redirections;
-	while (temp->next != NULL)
-		temp = temp->next;
-	temp->next = new_redirection;
-}
-
-t_parser	*in_list3(t_cmd *cmd, t_parser *cur, t_parser *redi)
-{
-	redi = in_list(*(&cur), *(&redi));
+	redi = malloc(sizeof(t_parser));
+	redi->tokken = cur->tokken;
+	redi->val = ft_strdup(cur->val);
+	redi->next = malloc(sizeof(t_parser));
+	redi->next->tokken = cur->next->tokken;
+	redi->next->val = ft_strdup(cur->next->val);
+	redi->next->next = NULL;
 	if (cmd->redirections == NULL)
 		cmd->redirections = redi;
 	else
-		in_list2(*(&redi), *(&cmd));
-	cur = cur->next;
+	{
+		temp = cmd->redirections;
+		while (temp->next != NULL)
+			temp = temp->next;
+		temp->next = redi;
+	}
 	return (redi);
 }
 
-t_cmd *declaration(t_cmd *ncmd, t_parser *redir, t_parser *current, int *flag)
+void	add_val_to_cmd(t_cmd *ncmd, t_parser *current, int *i)
 {
-	int	i;
+	ncmd->val[*i] = ft_strdup(current->val);
+	(*i)++;
+}
 
-	i = 0;
-	if (current->tokken == 1)
-	{
-		*flag = 1;
-		return (NULL);
-	}
+t_parser	*racc(int *i, t_parser *current, t_cmd *ncmd, t_parser *redi)
+{
 	if (current->tokken > 1)
-		redir = in_list3(*(&ncmd), *(&current),
-				*(&redir));
-	else
 	{
-		ncmd->val[i] = ft_strdup(current->val);
-		i++;
+		redi = in_list3(*(&ncmd), *(&current),
+				*(&redi));
+		current = current->next;
 	}
-	return (ncmd);
+	else
+		add_val_to_cmd(ncmd, current, *(&i));
+	current = current->next;
+	return (current);
 }

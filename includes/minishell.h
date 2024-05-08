@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 22:41:29 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/28 19:57:51 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/05/08 21:29:56 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,46 +137,56 @@ t_built	builtines(t_parser *list);
 void	builtines2(t_parser *list);
 void	tok_end_built(t_parser *list);
 void	tokken_erreur(t_parser *list, t_stru *stru);
-t_cmd	*list_to_cmd(t_parser *list, t_cmd *cmd, int flag);
+t_cmd	*list_to_cmd(t_parser *list, t_cmd *cmd, int i, int flag);
 void	prompt_cmd(t_cmd *cmd);
 int		count_l(t_parser *list, int flag);
-void	after_pipe(int *flag, t_parser *p, t_parser *c, t_cmd *n);
-void	check_t(t_parser *list, t_cmd *cmd);
 void	check_b(t_parser *list, t_cmd *cmd);
+void	after_pipe(int *flag, t_parser *p, t_parser *c, t_cmd *n);
 void	init_cmd(t_cmd *cmd);
-void	redi(t_parser *list, t_cmd *cmd);
+
 void	test_prom(t_cmd *cmd);
 void	prev(t_cmd *cmd);
 void	chaine_env(t_env *en);
 t_parser	*in_list(t_parser *current, t_parser	*new_redirection);
-void		in_list2(t_parser *new_redirection, t_cmd *ncmd);
 t_parser	*in_list3(t_cmd *cmd, t_parser *cur, t_parser *redi);
-t_cmd	*declaration(t_cmd *ncmd, t_parser *redir, t_parser *current, int *flag);
 
 //ENV
 void	print_env(char	**env);
+char	**env00(char **splite, t_env *env, int *i, t_stru *stru);
 t_env	*convert_env(t_env *env, t_stru *stru, t_parser *list);
-char	*check_dol(char *str, t_env *env);
+char	*check_dol(char *str, t_env *env, int i, int j);
 void	doll1(t_parser *list, t_env *env);
-char 	*check_dollars(char *str, t_env *env);
+char	*check_dollars(char *str, t_env *env);
+char	*apre(char *apres, char *recup, int *i, char *quote);
 char	*ft_mostrjoin(char const *s1, char const *s2, char const *s3);
 void	new_env(t_env *tes, t_stru *stru);
 void	built_env(t_env *env);
-t_env *push_back_list(t_env *env, char *str, char *str2);
+t_env	*push_back_list(t_env *env, char *str, char *str2);
+char	*parse_after(char *recup, int *i, char quote);
+char	*parse_after_dollar(char *recup, int *i, t_env *env, char quote);
+char	*parse_before_dollar(char *recup, int *i, char quote);
+char	*extract_variable(char *recup, int *i, t_env *env, char quote);
 
 //export
 t_env	*export_solo(t_env *env);
-t_env *sorted_insertion(t_env **env);
-void insert_sort(t_env **head, t_env *newenv);
-
+t_env	*sorted_insertion(t_env **env);
+void	insert_sort(t_env **head, t_env *newenv);
 
 //supquote
 void	supquote(t_parser *list);
 void	remove_character_at_position(char *str, int pos);
-void    is_in(char *in, char c);
-void    delete(char *str);
+void	is_in(char *in, char c);
+void	delete(char *str);
 
 //unset
 t_env	*unset(t_env *env, char *str);
+void	parse_command(t_parser *list, t_cmd *ncmd, int *flag);
+void	parse_redirection(t_cmd **ncmd, t_parser **current);
+void	add_val_to_cmd(t_cmd *ncmd, t_parser *current, int *i);
+void	append_redirection(t_cmd *ncmd, t_parser *new_redirection);
+t_parser	*create_redirection_node(t_parser *current);
+t_parser	*handle_redirection(t_cmd **ncmd, t_parser *current);
+t_cmd		*create_cmd_struct(t_parser *list, int *flag);
+t_parser	*racc(int *i, t_parser *current, t_cmd *cmd, t_parser *redi);
 
 #endif

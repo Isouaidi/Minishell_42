@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:07:33 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/28 18:59:55 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/05/07 23:00:59 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int ac, char **av, char **env)
 	t_cmd		*cmd;
 	t_env		*v_env;
 	char		*txt;
-	
+
 	(void)av;
 	stru.env = env;
 	v_env = NULL;

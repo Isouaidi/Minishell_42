@@ -7,6 +7,7 @@ SRCS =  main.c\
 						sup_quote.c\
 						utils_splite2.c)\
 		$(addprefix builtins/, signal.c\
+								env_utils.c\
 								export.c\
 								unset.c\
 								env.c)\

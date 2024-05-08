@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:37:26 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/28 18:41:02 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/05/08 20:18:37 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,11 @@ t_cmd	*list_add(t_parser *list, t_stru *stru, t_cmd *cmd, t_env **env)
 			*env = convert_env(*env, stru, *(&list));
 			supquote(*(&list));
 			//*env = push_back_list(*env, "ilyes", "moi");
-			//built_env(*env);
 			//sorted_insertion(env);
-			//*env = push_back_list(*env, "ilyes", "non");
 			//*env = unset(*env, "CHROME_DESKTOP");
 			//*env = export_solo(*env);
+			//built_env(*env);
+			//*env = push_back_list(*env, "ok", "non");
 			//chaine_env(*env);
 			//clear_env(*env);
 		}
