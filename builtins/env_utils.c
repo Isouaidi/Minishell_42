@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 19:35:12 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/05/08 21:24:44 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/05/09 19:20:14 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,77 +33,65 @@ char	**env00(char **splite, t_env *env, int *i, t_stru *stru)
 	return (splite);
 }
 
-char	*parse_before_dollar(char *recup, int *i, char quote)
+int	parse_before_dollar(char *recup, t_dol *dol)
 {
-	int		j;
-	char	*avant;
-
-	avant = malloc(sizeof(char) * (ft_strlen(recup + 1)));
-	j = 0;
-	while (recup[*i] && quote != '\'')
+	dol->avant = malloc(sizeof(char) * (ft_strlen(recup + 1)));
+	while (recup[dol->i] && dol->d != 1)
 	{
-		quote = update_quote(quote, recup[*i]);
-		if (recup[*i] == '$')
+		dol->quote = update_quote(dol->quote, recup[dol->i]);
+		if (recup[dol->i] == '$' && dol->quote != '\'')
+		{
+			dol->d = 1;
 			break ;
-		avant[j++] = recup[(*i)++];
+		}
+		dol->avant[dol->j++] = recup[dol->i++];
 	}
-	avant[j] = '\0';
-	return (avant);
+	dol->avant[dol->j] = '\0';
+	return (0);
 }
 
-char	*parse_after_dollar(char *recup, int *i, t_env *env, char quote)
+void	parse_after_dollar(char *recup, t_env *env, t_dol *dol)
 {
-	char	*va;
-
-	va = NULL;
-	if (recup[*i] == '\0')
+	if (recup[dol->i] == '\0')
 	{
-		va = ft_strdup("");
-		(*i)++;
+		dol->va = ft_strdup("");
+		dol->d = 1;
 	}
-	else if (recup[*i] == '$' && recup[*i + 1] == '\0')
-	{
-		va = ft_strdup("$");
-		(*i)++;
-	}
-	else if (recup[*i] == '$')
-		va = extract_variable(recup, i, env, quote);
-	return (va);
+	if (recup[dol->i] != '\0')
+		dol->d = 0;
+	dol->j = 0;
+	if ((recup[dol->i] == '$' && recup[dol->i + 1] == '\0')
+		|| (recup[dol->i + 1] == '"' && recup[dol->i] == '$'
+			&& recup[dol->i + 1] == '"' ))
+		dol->va = ft_strdup("$");
+	else if (recup[dol->i] == '$' && dol->d == 0)
+		extract_variable(recup, env, dol);
 }
 
-char	*extract_variable(char *recup, int *i, t_env *env, char quote)
+void	extract_variable(char *recup, t_env *env, t_dol *dol)
 {
-	int		j;
-	char	*va;
-	char	*temp;
-
-	temp = malloc(sizeof(char) * (ft_strlen(recup + 1)));
-	j = 0;
-	(*i)++;
-	while (recup[*i] && recup[*i] != '"' && recup[*i] != '\''
-		&& recup[*i] != ' ' && recup[*i] != '$')
+	dol->va = malloc(sizeof(char) * (ft_strlen(recup + 1)));
+	dol->i++;
+	while (recup[dol->i] && recup[dol->i] != '"' && recup[dol->i] != '\''
+		&& recup[dol->i] != ' ' && recup[dol->i] != '$')
 	{
-		quote = update_quote(quote, recup[*i]);
-		temp[j++] = recup[(*i)++];
+		dol->quote = update_quote(dol->quote, recup[dol->i]);
+		dol->va[dol->j++] = recup[dol->i++];
 	}
-	temp[j] = '\0';
-	va = check_dollars(temp, env);
-	free(temp);
-	return (va);
+	dol->va[dol->j] = '\0';
+	dol->va = check_dollars(dol->va, env);
 }
 
-char	*parse_after(char *recup, int *i, char quote)
+void	parse_after(char *recup, t_dol *dol)
 {
-	int		j;
-	char	*apres;
-
-	j = 0;
-	apres = malloc(sizeof(char) * (ft_strlen(recup + 1)));
-	while (recup[*i])
+	dol->d = 0;
+	dol->j = 0;
+	dol->apres = malloc(sizeof(char) * (ft_strlen(recup + 1)));
+	while (recup[dol->i])
 	{
-		quote = update_quote(quote, recup[*i]);
-		apres[j++] = recup[(*i)++];
+		dol->quote = update_quote(dol->quote, recup[dol->i]);
+		dol->apres[dol->j++] = recup[dol->i++];
 	}
-	apres[j] = '\0';
-	return (apres);
+	dol->apres[dol->j] = '\0';
+	dol->quote = update_quote(dol->quote, recup[dol->i]);
 }

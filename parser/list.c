@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:37:26 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/05/08 20:18:37 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/05/09 19:42:55 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,12 @@ t_cmd	*list_add(t_parser *list, t_stru *stru, t_cmd *cmd, t_env **env)
 			supquote(*(&list));
 			//*env = push_back_list(*env, "ilyes", "moi");
 			//sorted_insertion(env);
-			//*env = unset(*env, "CHROME_DESKTOP");
 			//*env = export_solo(*env);
+			//*env = push_back_list(*env, "ok", "non", 0);
 			//built_env(*env);
-			//*env = push_back_list(*env, "ok", "non");
-			//chaine_env(*env);
+			// printf("\n");
+			// *env = unset(*env, "ok");
+			// built_env(*env);
 			//clear_env(*env);
 		}
 		if (stru->er_tok == 0 && stru->er_pipe == 0 && stru->er_quote == 0)
