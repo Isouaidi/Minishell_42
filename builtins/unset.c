@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 19:22:18 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/05/07 23:04:59 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/05/18 16:49:23 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,14 @@ t_env	*unset(t_env *env, char *str)
 		current = current->next;
 	}
 	return (env);
+}
+
+int	unset2(t_env *env, t_cmd *cmd)
+{
+	int	i;
+
+	i = 1;
+	while (cmd->val[i])
+		env = unset(env, cmd->val[i++]);
+	return (0);
 }

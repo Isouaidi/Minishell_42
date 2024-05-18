@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:52:38 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/28 17:52:21 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/05/18 16:47:31 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	print_erreur(t_stru *stru)
 	return (0);
 }
 
-void	pipe_end(t_stru *stru, t_parser *list)
+void	pipe_end(t_stru *stru, t_pars *list)
 {
 	while (list->next != NULL)
 		list = list->next;

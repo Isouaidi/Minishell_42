@@ -6,13 +6,13 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 14:31:10 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/03/26 17:54:01 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/05/18 16:47:31 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	tokken(t_parser *list)
+t_token	tokken(t_pars *list)
 {
 	if (list->val[0] == '|' && list->val[1] == '\0')
 		return (1);
@@ -27,7 +27,7 @@ t_token	tokken(t_parser *list)
 	return (0);
 }
 
-t_built	builtines(t_parser *list)
+t_built	builtines(t_pars *list)
 {
 	if (list->val[0] == 'e' && list->val[1] == 'c' && list->val[2] == 'h'
 		&& list->val[3] == 'o' && list->val[4] == '\0')
@@ -54,7 +54,7 @@ t_built	builtines(t_parser *list)
 	return (0);
 }
 
-void	builtines2(t_parser *list)
+void	builtines2(t_pars *list)
 {
 	while (list != NULL)
 	{
@@ -68,7 +68,7 @@ void	builtines2(t_parser *list)
 	}
 }
 
-void	tok_end_built(t_parser *list)
+void	tok_end_built(t_pars *list)
 {
 	while (list != NULL)
 	{

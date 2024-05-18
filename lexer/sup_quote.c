@@ -6,13 +6,13 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:42:58 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/05/07 22:59:35 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/05/18 16:47:31 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	supquote(t_parser *list)
+void	supquote(t_pars *list)
 {
 	while (list)
 	{

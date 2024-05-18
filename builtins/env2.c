@@ -6,35 +6,34 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 19:25:08 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/05/09 19:40:14 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/05/18 16:32:18 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	built_env(t_env *env)
+int	built_env(t_env *env)
 {
 	while (env)
 	{
-		printf("%s", env->name);
-		printf("=");
-		if (env->value == NULL)
-			printf("\n");
-		else
-			printf("%s\n", env->value);
+		if (env->name)
+		{
+			if (ft_strcmp(env->value, "") != 0)
+				printf("%s=%s\n", env->name, env->value);
+		}
 		env = env->next;
 	}
-	printf("\n");
+	return (0);
 }
 
-t_env	*push_back_list(t_env *env, char *str, char *str2, int f)
+void	push_back_list(t_stru *stru, char *str, char *str2, int f)
 {
 	t_env	*element;
 	t_env	*check;
 	t_env	*temp;
 	t_env	*before;
 
-	check = env;
+	check = stru->enuv;
 	before = check;
 	element = malloc(sizeof(t_env));
 	element->name = ft_strdup(str);
@@ -52,7 +51,6 @@ t_env	*push_back_list(t_env *env, char *str, char *str2, int f)
 			temp = temp->next;
 		temp->next = element;
 	}
-	return (env);
 }
 
 void	rac_push(t_env *check, t_env *element, int *f)

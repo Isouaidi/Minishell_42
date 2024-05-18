@@ -6,32 +6,32 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 18:43:22 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/05/08 19:50:57 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/05/18 16:47:31 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_parser	*in_list(t_parser *current, t_parser	*new_redirection)
+t_pars	*in_list(t_pars *current, t_pars	*new_redirection)
 {
-	new_redirection = malloc(sizeof(t_parser));
+	new_redirection = malloc(sizeof(t_pars));
 	new_redirection->tokken = current->tokken;
 	new_redirection->val = ft_strdup(current->val);
-	new_redirection->next = malloc(sizeof(t_parser));
+	new_redirection->next = malloc(sizeof(t_pars));
 	new_redirection->next->tokken = current->next->tokken;
 	new_redirection->next->val = ft_strdup(current->next->val);
 	new_redirection->next->next = NULL;
 	return (new_redirection);
 }
 
-t_parser	*in_list3(t_cmd *cmd, t_parser *cur, t_parser *redi)
+t_pars	*in_list3(t_cmd *cmd, t_pars *cur, t_pars *redi)
 {
-	t_parser	*temp;
+	t_pars	*temp;
 
-	redi = malloc(sizeof(t_parser));
+	redi = malloc(sizeof(t_pars));
 	redi->tokken = cur->tokken;
 	redi->val = ft_strdup(cur->val);
-	redi->next = malloc(sizeof(t_parser));
+	redi->next = malloc(sizeof(t_pars));
 	redi->next->tokken = cur->next->tokken;
 	redi->next->val = ft_strdup(cur->next->val);
 	redi->next->next = NULL;
@@ -47,13 +47,13 @@ t_parser	*in_list3(t_cmd *cmd, t_parser *cur, t_parser *redi)
 	return (redi);
 }
 
-void	add_val_to_cmd(t_cmd *ncmd, t_parser *current, int *i)
+void	add_val_to_cmd(t_cmd *ncmd, t_pars *current, int *i)
 {
 	ncmd->val[*i] = ft_strdup(current->val);
 	(*i)++;
 }
 
-t_parser	*racc(int *i, t_parser *current, t_cmd *ncmd, t_parser *redi)
+t_pars	*racc(int *i, t_pars *current, t_cmd *ncmd, t_pars *redi)
 {
 	if (current->tokken > 1)
 	{

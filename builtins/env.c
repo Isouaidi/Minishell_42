@@ -6,18 +6,19 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 07:59:10 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/05/09 19:26:26 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/05/18 16:47:31 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*convert_env(t_env *env, t_stru *stru, t_parser *list)
+t_env	*convert_env(t_env *env, t_stru *stru, t_pars *list)
 {
 	int		i;
 	char	**splite;
 	t_env	*tes;
 
+	stru->check = 1;
 	i = 0;
 	tes = env;
 	if (env == NULL)
@@ -56,7 +57,7 @@ char	*check_dol(char *recup, t_env *env)
 	return (ft_mostrjoin(dol.avant, dol.va, dol.apres));
 }
 
-void	doll1(t_parser *list, t_env *env)
+void	doll1(t_pars *list, t_env *env)
 {
 	int		j;
 	char	quote;
@@ -69,7 +70,9 @@ void	doll1(t_parser *list, t_env *env)
 		while (list->val[j])
 		{
 			quote = update_quote(quote, list->val[j]);
-			if (list->val[j] == '$')
+			if (list->val[j] == '$' && list->val[j + 1] == '?' && quote != '\'')
+				list->val = modifintero(list->val, 0, 0);
+			else if (list->val[j] == '$')
 				list->val = check_dol(list->val, env);
 			j++;
 		}

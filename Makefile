@@ -10,8 +10,13 @@ SRCS =  main.c\
 								env2.c\
 								env_utils.c\
 								export.c\
+								export_2.c\
 								unset.c\
-								env.c)\
+								env.c\
+								echo.c\
+								pwd.c\
+								cd.c\
+								exit.c)\
 		$(addprefix parser/, list.c\
 							tok_built.c\
 							parsing_tok.c\
@@ -20,12 +25,16 @@ SRCS =  main.c\
 		$(addprefix utils/, utils_2.c\
 							utils_3.c\
 							utils.c)\
+		$(addprefix exec/, path.c\
+						simple.c\
+						exb.c\
+						here.c)\
 
 
 OBJS = $(SRCS:.c=.o)
 NAME = minishell
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Iincludes  -g3 #-fsanitize=leak
+CFLAGS = -Wall -Wextra -Werror -Iincludes  -g3 #-fsanitize=address
 RM = rm -rf
 LIBFT = ./libft
 CINCLUDES	=	-I ./includes

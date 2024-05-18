@@ -6,13 +6,13 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:37:26 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/05/09 19:42:55 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/05/18 16:47:31 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	printlist(t_parser *list)
+void	printlist(t_pars *list)
 {
 	int	i;
 
@@ -28,9 +28,9 @@ void	printlist(t_parser *list)
 	}
 }
 
-void	clearlist(t_parser *list)
+void	clearlist(t_pars *list)
 {
-	t_parser	*temp;
+	t_pars	*temp;
 
 	while (list)
 	{
@@ -40,12 +40,12 @@ void	clearlist(t_parser *list)
 	}
 }
 
-t_parser	*pushlist(t_parser *st, char *str)
+t_pars	*pushlist(t_pars *st, char *str)
 {
-	t_parser	*element;
-	t_parser	*temp;
+	t_pars	*element;
+	t_pars	*temp;
 
-	element = malloc(sizeof(t_parser));
+	element = malloc(sizeof(t_pars));
 	if (!element)
 		return (0);
 	element->val = str;
@@ -59,7 +59,7 @@ t_parser	*pushlist(t_parser *st, char *str)
 	return (st);
 }
 
-t_cmd	*list_add(t_parser *list, t_stru *stru, t_cmd *cmd, t_env **env)
+t_cmd	*list_add(t_pars *list, t_stru *stru, t_cmd *cmd)
 {
 	int	i;
 
@@ -77,7 +77,7 @@ t_cmd	*list_add(t_parser *list, t_stru *stru, t_cmd *cmd, t_env **env)
 		tokken_erreur(list, stru);
 		if (erreurs(stru) == 0)
 		{
-			*env = convert_env(*env, stru, *(&list));
+			stru->enuv = convert_env(stru->enuv, stru, *(&list));
 			supquote(*(&list));
 			//*env = push_back_list(*env, "ilyes", "moi");
 			//sorted_insertion(env);
@@ -86,7 +86,7 @@ t_cmd	*list_add(t_parser *list, t_stru *stru, t_cmd *cmd, t_env **env)
 			//built_env(*env);
 			// printf("\n");
 			// *env = unset(*env, "ok");
-			// built_env(*env);
+			//built_env(*env);
 			//clear_env(*env);
 		}
 		if (stru->er_tok == 0 && stru->er_pipe == 0 && stru->er_quote == 0)
@@ -96,18 +96,38 @@ t_cmd	*list_add(t_parser *list, t_stru *stru, t_cmd *cmd, t_env **env)
 			//clearlist(*(&list));
 			//clear_cmd(*(&cmd));
 			//clear_env(**(&env));
+			return (cmd);
 		}
 	}
-	if (print_erreur(stru) < 1)
-	{
-		//doll1(list);
-		//printlist(list);
-		//printf("9999999999999\n\n");
-		prompt_cmd(cmd);
-		return (cmd);
-		stru->er_quote = 0;
-		stru->er_pipe = 0;
-		stru->er_tok = 0;
-	}
+	// if (print_erreur(stru) < 1)
+	// {
+	// 	stru->er_quote = 0;
+	// 	stru->er_pipe = 0;
+	// 	stru->er_tok = 0;
+	// }
 	return(NULL);
+}
+
+char	*modifintero(char *str, int i, int j)
+{
+	char	*av;
+	char	*va;
+	char	*ap;
+	char	*final;
+
+	while (str[i] && str[i] != '$')
+		i++;
+	av = malloc(sizeof(char) * (i + 1));
+	ft_strlcpy(av, str, i + 1);
+	va = ft_strdup(ft_itoa(g_var));
+	j = ft_strlen(str);
+	i = i + 2;
+	ap = malloc(sizeof(char) * (j - i) + 1);
+	j = 0;
+	while (str[i])
+		ap[j++] = str[i++];
+	ap[j] = '\0';
+	final = ft_strjoin(av, va);
+	final = ft_strjoin(final, ap);
+	return (final);
 }

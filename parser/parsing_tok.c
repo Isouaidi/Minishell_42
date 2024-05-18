@@ -6,15 +6,15 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:21:29 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/05/07 23:01:52 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/05/18 16:47:31 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	tokken_erreur(t_parser *list, t_stru *stru)
+void	tokken_erreur(t_pars *list, t_stru *stru)
 {
-	t_parser	*temp;
+	t_pars	*temp;
 
 	if (list != NULL)
 	{

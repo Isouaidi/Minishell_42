@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 22:41:29 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/05/09 19:39:55 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/05/18 16:49:54 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include <unistd.h>
+
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <fcntl.h>
@@ -21,10 +22,13 @@
 # include <signal.h>
 # include <stdlib.h>
 # include <limits.h>
+# include <sys/wait.h>
 
 # include "../libft/inc/libft.h"
 # include "../libft/inc/ft_printf.h"
 # include "../libft/inc/get_next_line_bonus.h"
+
+extern int	g_var;
 
 int		main(int ac, char **av, char **env);
 void	set_signal_action(void);
@@ -52,22 +56,13 @@ typedef enum e_built
 	b_exit,
 }	t_built;
 
-typedef struct s_parser
+typedef struct s_pars
 {
 	t_token			tokken;
 	t_built			built;
 	char			*val;
-	struct s_parser	*next;
-}	t_parser;
-
-typedef struct s_cmd
-{
-	t_token			tokken;
-	t_built			built;
-	t_parser		*redirections;	
-	char			**val;
-	struct s_cmd	*next;
-}	t_cmd;
+	struct s_pars	*next;
+}	t_pars;
 
 typedef struct s_env
 {
@@ -75,6 +70,17 @@ typedef struct s_env
 	char			*value;
 	struct s_env	*next;
 }	t_env;
+
+typedef struct s_cmd
+{
+	t_token			tokken;
+	t_built			built;
+	t_pars			*redirections;	
+	char			**val;
+	struct s_cmd	*next;
+	pid_t			pid;
+	int				here;
+}	t_cmd;
 
 typedef struct s_stru
 {
@@ -90,7 +96,34 @@ typedef struct s_stru
 	int		i;
 	int		dquote;
 	int		squote;
+	char	**path;
+	char	*cmd;
+	char	*flag;
+	char	*flag2;
+	int		fd0;
+	int		fd1;
+	char	*thefile;
+	int		r;
+	int		exitarg;
+	int		test;
+	int		numcmd;
+	int		b;
+	int		p;
+	int		check;
+	int		inson;
+	t_env	*enuv;
+	t_env	*cpoy_env;
+	t_env	*sort;
 }	t_stru;
+
+typedef struct s_cpy
+{
+	t_env	*current_new;
+	t_env	*current_old;
+	t_env	*new_head;
+	t_env	*temp;
+	t_env	*next;
+}	t_cpy;
 
 typedef struct s_dol
 {
@@ -139,22 +172,22 @@ void	final_part(t_stru *stru, int j, int i);
 void	check_quote(t_stru *stru);
 
 //Parser
-void	printlist(t_parser *list);
-void	clearlist(t_parser *list);
-t_parser	*pushlist(t_parser *st, char *str);
-t_parser	*in_list(t_parser *current, t_parser	*new_redirection);
-t_parser	*in_list3(t_cmd *cmd, t_parser *cur, t_parser *redi);
-t_cmd	*list_add(t_parser	*list, t_stru *stru, t_cmd *cmd, t_env **env);
-t_token	tokken(t_parser *list);
-t_built	builtines(t_parser *list);
-void	builtines2(t_parser *list);
-void	tok_end_built(t_parser *list);
-void	tokken_erreur(t_parser *list, t_stru *stru);
-t_cmd	*list_to_cmd(t_parser *list, t_cmd *cmd, int i, int flag);
+void	printlist(t_pars *list);
+void	clearlist(t_pars *list);
+t_pars	*pushlist(t_pars *st, char *str);
+t_pars	*in_list(t_pars *current, t_pars	*new_redirection);
+t_pars	*in_list3(t_cmd *cmd, t_pars *cur, t_pars *redi);
+t_cmd	*list_add(t_pars	*list, t_stru *stru, t_cmd *cmd);
+t_token	tokken(t_pars *list);
+t_built	builtines(t_pars *list);
+void	builtines2(t_pars *list);
+void	tok_end_built(t_pars *list);
+void	tokken_erreur(t_pars *list, t_stru *stru);
+t_cmd	*list_to_cmd(t_pars *list, t_cmd *cmd, int i, int flag);
 void	prompt_cmd(t_cmd *cmd);
-int		count_l(t_parser *list, int flag);
-void	check_b(t_parser *list, t_cmd *cmd);
-void	after_pipe(int *flag, t_parser *p, t_parser *c, t_cmd *n);
+int		count_l(t_pars *list, int flag);
+void	check_b(t_pars *list, t_cmd *cmd);
+void	after_pipe(int *flag, t_pars *p, t_pars *c, t_cmd *n);
 void	init_cmd(t_cmd *cmd);
 
 void	test_prom(t_cmd *cmd);
@@ -163,41 +196,83 @@ void	prev(t_cmd *cmd);
 //ENV
 void	print_env(char	**env);
 char	**env00(char **splite, t_env *env, int *i, t_stru *stru);
-t_env	*convert_env(t_env *env, t_stru *stru, t_parser *list);
+t_env	*convert_env(t_env *env, t_stru *stru, t_pars *list);
 char	*check_dol(char *str, t_env *env);
-void	doll1(t_parser *list, t_env *env);
+void	doll1(t_pars *list, t_env *env);
 char	*check_dollars(char *str, t_env *env);
 char	*apre(char *apres, char *recup, int *i, char *quote);
 char	*ft_mostrjoin(char const *s1, char const *s2, char const *s3);
 void	new_env(t_env *tes, t_stru *stru);
-void	built_env(t_env *env);
+int		built_env(t_env *env);
 void	parse_after_dollar(char *recup, t_env *env, t_dol *dol);
 int		parse_before_dollar(char *recup, t_dol *dol);
 void	extract_variable(char *recup, t_env *env, t_dol *dol);
 void	parse_after(char *recup, t_dol *dol);
 
 //export
-t_env	*export_solo(t_env *env);
+void	export_solo(t_env *env);
+int		export(t_stru *stru, t_cmd *cmd, int i, int j);
 t_env	*sorted_insertion(t_env **env);
 void	insert_sort(t_env **head, t_env *newenv);
-t_env	*push_back_list(t_env *env, char *str, char *str2, int f);
+void	push_back_list(t_stru *stru, char *str, char *str2, int f);
 void	rac_push(t_env *check, t_env *element, int *f);
 
 //supquote
-void	supquote(t_parser *list);
+void	supquote(t_pars *list);
 void	remove_character_at_position(char *str, int pos);
 void	is_in(char *in, char c);
 void	delete(char *str);
 
 //unset
 t_env	*unset(t_env *env, char *str);
-void	parse_command(t_parser *list, t_cmd *ncmd, int *flag);
-void	parse_redirection(t_cmd **ncmd, t_parser **current);
-void	add_val_to_cmd(t_cmd *ncmd, t_parser *current, int *i);
-void	append_redirection(t_cmd *ncmd, t_parser *new_redirection);
-t_parser	*create_redirection_node(t_parser *current);
-t_parser	*handle_redirection(t_cmd **ncmd, t_parser *current);
-t_cmd		*create_cmd_struct(t_parser *list, int *flag);
-t_parser	*racc(int *i, t_parser *current, t_cmd *cmd, t_parser *redi);
+int		unset2(t_env *env, t_cmd *cmd);
+void	parse_command(t_pars *list, t_cmd *ncmd, int *flag);
+void	parse_redirection(t_cmd **ncmd, t_pars **current);
+void	add_val_to_cmd(t_cmd *ncmd, t_pars *current, int *i);
+void	append_redirection(t_cmd *ncmd, t_pars *new_redirection);
+t_pars	*create_redirection_node(t_pars *current);
+t_pars	*handle_redirection(t_cmd **ncmd, t_pars *current);
+t_cmd	*create_cmd_struct(t_pars *list, int *flag);
+t_pars	*racc(int *i, t_pars *current, t_cmd *cmd, t_pars *redi);
+void	built_env_export(t_env *env);
+
+//exec
+char	*ft_strjoin2(char *s1, char *s2);
+void	o(t_stru *stru);
+void	getpath(t_stru *stru, char **env);
+char	*pathcmd(t_stru *stru, t_cmd *cmd);
+int		countcmd(t_cmd *cmd);
+int		getcmd(t_cmd *cmd, t_stru *stru);
+void	boss(t_cmd *cmd, t_stru *stru, char **env);
+void	exec(t_cmd *cmd, t_stru *stru, char **env);
+void	son(t_stru *stru, t_cmd *cmd, int *pipefd, char **env);
+void	father(int *pipefd);
+void	redirectin(t_cmd *cmd);
+void	end(t_cmd *cmd, t_stru *stru, char **env);
+void	lastex(t_cmd *cmd, t_stru *stru, char **env);
+char	*ft_strdup2(char *s);
+int		countforall(t_cmd *cmd);
+void	moremore(t_cmd *cmd);
+void	heredoc(t_cmd *cmd, t_stru *stru);
+void	heredocson(t_cmd *cmd, int fd);
+int		ft_strcmp(const char *s1, const char *s2);
+void	redirectout(t_cmd *cmd);
+int		strtofd(char *str);
+void	echo(t_cmd *cmd);
+int		echon(t_cmd *cmd);
+int		pwd(void);
+int		cd(t_cmd *cmd);
+int		ft_exit(t_cmd *cmd);
+void	built(char *s, t_stru *stru);
+void	execbuilt(t_cmd *cmd, t_stru *stru);
+void	sigint_handle(int sig);
+char	*get_randomfile(void);
+int		valid(t_cmd *cmd);
+void	etsi(t_cmd *cmd, t_stru *stru, int i);
+char	**convert_chaine(t_stru *stru);
+void	glist(t_pars *list);
+char	*modifintero(char *str, int i, int j);
+t_env	*copy_list(t_env *head);
+t_env	*new_node(const char *name, const char *value);
 
 #endif

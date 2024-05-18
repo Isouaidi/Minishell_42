@@ -6,18 +6,18 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:34:20 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/05/09 19:45:30 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/05/18 16:47:31 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_cmd	*list_to_cmd(t_parser *list, t_cmd *cmd, int i, int flag)
+t_cmd	*list_to_cmd(t_pars *list, t_cmd *cmd, int i, int flag)
 {
 	t_cmd		*ncmd;
-	t_parser	*current;
-	t_parser	*pipe_start;
-	t_parser	*new_redirection;
+	t_pars	*current;
+	t_pars	*pipe_start;
+	t_pars	*new_redirection;
 	int			count;
 
 	ncmd = malloc(sizeof(t_cmd));
@@ -40,10 +40,10 @@ t_cmd	*list_to_cmd(t_parser *list, t_cmd *cmd, int i, int flag)
 	return (cmd);
 }
 
-int	count_l(t_parser *list, int flag)
+int	count_l(t_pars *list, int flag)
 {
 	int			count;
-	t_parser	*current;
+	t_pars	*current;
 
 	count = 0;
 	current = list;
@@ -60,7 +60,7 @@ int	count_l(t_parser *list, int flag)
 	return (count);
 }
 
-void	after_pipe(int *flag, t_parser *p, t_parser *c, t_cmd *n)
+void	after_pipe(int *flag, t_pars *p, t_pars *c, t_cmd *n)
 {
 	if ((*flag) == 1 && c != NULL)
 	{
@@ -81,9 +81,9 @@ void	init_cmd(t_cmd *cmd)
 	}
 }
 
-void	check_b(t_parser *list, t_cmd *cmd)
+void	check_b(t_pars *list, t_cmd *cmd)
 {
-	t_parser	*temp;
+	t_pars	*temp;
 
 	init_cmd(cmd);
 	temp = list;
