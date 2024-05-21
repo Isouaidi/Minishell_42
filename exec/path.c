@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: bsafi <bsafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 14:10:46 by bsafi             #+#    #+#             */
-/*   Updated: 2024/05/17 21:21:37 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/05/20 18:39:21 by bsafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,19 @@ void	getpath(t_stru *stru, char **env)
 {
 	int		i;
 	int		j;
-	//int		r;
 	char	*line;
 
-	//r = 0;
 	i = -1;
 	while (env[++i])
 	{
 		j = 4;
 		if (ft_strncmp(env[i], "PATH", j++) == 0)
 		{
-			//r = 1;
 			line = ft_strdup(env[i] + j);
 		}
 	}
-	// o(1 ,stru);
+	if (o(stru) == 1)
+		return ;
 	stru->path = ft_split(line, ':');
 	free(line);
 	i = -1;
@@ -38,26 +36,26 @@ void	getpath(t_stru *stru, char **env)
 		stru->path[i] = ft_strjoin2(stru->path[i], "/");
 }
 
-void	o(t_stru *stru)
+int	o(t_stru *stru)
 {
-	t_env *temp;
-	
+	t_env	*temp;
+
 	temp = stru->enuv;
 	while (temp)
 	{
 		if (ft_strcmp(temp->name, "PATH") == 0)
 		{
 			stru->p++;
-			//break;
-		}	
-		// built_env(temp);
+		}
 		temp = temp->next;
 	}
 	if (stru->p == 0)
 	{
+		g_var = 127;
 		printf("error PATH\n");
-		//exit(1);
+		return (1);
 	}
+	return (0);
 }
 
 char	*ft_strjoin2(char *s1, char *s2)
@@ -101,7 +99,6 @@ char	*pathcmd(t_stru *stru, t_cmd *cmd)
 		free(test);
 	}
 	test = ft_strdup(cmd->val[0]);
-	// tester ensuite avec le path directement transmis en argument
 	return (test);
 }
 

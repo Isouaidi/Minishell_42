@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: bsafi <bsafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 22:41:29 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/05/18 16:49:54 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/05/20 21:02:20 by bsafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ typedef struct s_stru
 	t_env	*enuv;
 	t_env	*cpoy_env;
 	t_env	*sort;
+	int		e;
+	int		fd6;
 }	t_stru;
 
 typedef struct s_cpy
@@ -177,7 +179,7 @@ void	clearlist(t_pars *list);
 t_pars	*pushlist(t_pars *st, char *str);
 t_pars	*in_list(t_pars *current, t_pars	*new_redirection);
 t_pars	*in_list3(t_cmd *cmd, t_pars *cur, t_pars *redi);
-t_cmd	*list_add(t_pars	*list, t_stru *stru, t_cmd *cmd);
+t_cmd	*list_add(t_pars	*list, t_stru *stru, t_cmd *cmd, int i);
 t_token	tokken(t_pars *list);
 t_built	builtines(t_pars *list);
 void	builtines2(t_pars *list);
@@ -238,7 +240,7 @@ void	built_env_export(t_env *env);
 
 //exec
 char	*ft_strjoin2(char *s1, char *s2);
-void	o(t_stru *stru);
+int		o(t_stru *stru);
 void	getpath(t_stru *stru, char **env);
 char	*pathcmd(t_stru *stru, t_cmd *cmd);
 int		countcmd(t_cmd *cmd);
@@ -260,6 +262,7 @@ void	redirectout(t_cmd *cmd);
 int		strtofd(char *str);
 void	echo(t_cmd *cmd);
 int		echon(t_cmd *cmd);
+int		echon2(t_cmd *cmd, int i);
 int		pwd(void);
 int		cd(t_cmd *cmd);
 int		ft_exit(t_cmd *cmd);
@@ -267,6 +270,7 @@ void	built(char *s, t_stru *stru);
 void	execbuilt(t_cmd *cmd, t_stru *stru);
 void	sigint_handle(int sig);
 char	*get_randomfile(void);
+char	*get_randomfile0(void);
 int		valid(t_cmd *cmd);
 void	etsi(t_cmd *cmd, t_stru *stru, int i);
 char	**convert_chaine(t_stru *stru);
@@ -274,5 +278,15 @@ void	glist(t_pars *list);
 char	*modifintero(char *str, int i, int j);
 t_env	*copy_list(t_env *head);
 t_env	*new_node(const char *name, const char *value);
+void	checkg(t_cmd *cmd, t_stru *stru);
+
+//ca comble
+void	exec2(t_cmd *cmd, t_cmd *test, t_stru *stru);
+void	thewait(t_cmd *test);
+void	freeing(char *path, char **all);
+void	place(t_stru *stru, char **all, char **env, char *path);
+char	**son2(t_cmd *cmd, int *pipefd);
+void	place2(t_stru *stru, char **all, char **env, char *path);
+char	**lastexe2(t_cmd *cmd);
 
 #endif

@@ -27,6 +27,9 @@ SRCS =  main.c\
 							utils.c)\
 		$(addprefix exec/, path.c\
 						simple.c\
+						simple2.c\
+						simple3.c\
+						simple4.c\
 						exb.c\
 						here.c)\
 
@@ -53,7 +56,7 @@ RED = \033[38;5;130m
 GREEN = \033[38;5;85m
 
 FICH_COUNT = 0
-NBR_TOT_FICHIER = 9
+NBR_TOT_FICHIER = 34
 NBR_COMPILER = ${shell expr 100 \* ${FICH_COUNT} / ${NBR_TOT_FICHIER}}
 BAR =  ${shell expr 23 \* ${FICH_COUNT} / ${NBR_TOT_FICHIER}}
 

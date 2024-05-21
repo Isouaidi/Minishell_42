@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:37:26 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/05/18 16:47:31 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:23:17 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,53 +59,31 @@ t_pars	*pushlist(t_pars *st, char *str)
 	return (st);
 }
 
-t_cmd	*list_add(t_pars *list, t_stru *stru, t_cmd *cmd)
+t_cmd	*list_add(t_pars *list, t_stru *stru, t_cmd *cmd, int i)
 {
-	int	i;
-
-	i = 0;
 	cmd = NULL;
 	stru->er_tok = 0;
 	if (stru->er_quote < 1)
 	{
 		while (stru->args[i])
-		{
-			list = pushlist(list, stru->args[i]);
-			i++;
-		}
+			list = pushlist(list, stru->args[i++]);
 		tok_end_built(*(&list));
 		tokken_erreur(list, stru);
 		if (erreurs(stru) == 0)
 		{
 			stru->enuv = convert_env(stru->enuv, stru, *(&list));
 			supquote(*(&list));
-			//*env = push_back_list(*env, "ilyes", "moi");
-			//sorted_insertion(env);
-			//*env = export_solo(*env);
-			//*env = push_back_list(*env, "ok", "non", 0);
-			//built_env(*env);
-			// printf("\n");
-			// *env = unset(*env, "ok");
-			//built_env(*env);
-			//clear_env(*env);
 		}
 		if (stru->er_tok == 0 && stru->er_pipe == 0 && stru->er_quote == 0)
 		{
 			cmd = list_to_cmd(list, cmd, 0, 0);
 			check_b(list, *(&cmd));
-			//clearlist(*(&list));
-			//clear_cmd(*(&cmd));
-			//clear_env(**(&env));
+			clearlist(list);
 			return (cmd);
 		}
 	}
-	// if (print_erreur(stru) < 1)
-	// {
-	// 	stru->er_quote = 0;
-	// 	stru->er_pipe = 0;
-	// 	stru->er_tok = 0;
-	// }
-	return(NULL);
+	clear_cmd(cmd);
+	return (NULL);
 }
 
 char	*modifintero(char *str, int i, int j)

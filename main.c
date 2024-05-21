@@ -6,7 +6,7 @@
 /*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:07:33 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/05/18 16:47:31 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:23:22 by isouaidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,29 +30,43 @@ void	print_env(char **env)
 	while (env[i])
 	{
 		printf("%s\n", env[i]);
-		i++;	
+		i++;
 	}
 	return ;
+}
+
+void	main2(char **env, t_stru *stru, char *txt)
+{
+	t_pars		*pars;
+	t_cmd		*cmd;
+
+	cmd = NULL;
+	pars = NULL;
+	getargs(stru, txt);
+	cmd = list_add(pars, stru, cmd, 0);
+	if (stru->er_tok == 0 && stru->er_pipe == 0 && stru->er_quote == 0)
+	{
+		getpath(stru, env);
+		etsi(cmd, stru, countcmd(cmd));
+		boss(cmd, stru, env);
+	}
+	stru->p = 0;
+	free_tab(stru->args);
+	add_history(txt);
+	free(txt);
+	clearlist(pars);
+	clear_cmd(cmd);
 }
 
 int	main(int ac, char **av, char **env)
 {
 	t_stru		stru;
-	t_pars	*pars;
-	t_cmd		*cmd;
-	// char 	**env1;
-	t_env		*v_env;
-	(void)ac;
 	char		*txt;
 
 	(void)av;
 	stru.env = env;
-	v_env = NULL;
 	stru.check = 0;
-	pars = NULL;
-	cmd = NULL;
 	stru.p = 0;
-//	int   i = 0;
 	if (ac == 1 && env[0] != NULL)
 	{
 		set_signal_action();
@@ -61,28 +75,10 @@ int	main(int ac, char **av, char **env)
 			txt = readline("Minishell> ");
 			if (txt_null(txt) == 1)
 				break ;
-			getargs(&stru, txt);
-			cmd = list_add(pars, &stru, cmd);
-			//prompt_cmd(cmd);
-			// env1 = convert_chaine(&stru);
-			getpath(&stru, env);
-			o(&stru);
-			etsi(cmd, &stru, countcmd(cmd));
-			//o(&stru);
-			//printf("%d\n", stru.p);
-			if (stru.p > 0)
-				boss(cmd, &stru, env);
-			// else
-			// 	printf("error PATH\n");
-			stru.p = 0;
-			free_tab(stru.args);
-			add_history(txt);
-			free(txt);
-			//clearlist(pars);
-			//clear_cmd(cmd);
-			free_tab(stru.path);
+			main2(env, &stru, txt);
 		}
-	clear_env(v_env);
+		clear_env(stru.enuv);
+		clear_env(stru.cpoy_env);
 	}
 	return (0);
 }

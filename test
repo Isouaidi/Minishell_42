@@ -1,0 +1,12 @@
+builtins
+exec
+includes
+lexer
+libft
+main.c
+main.o
+Makefile
+minishell
+parser
+test
+utils

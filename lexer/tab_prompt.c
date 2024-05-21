@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tab_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: bsafi <bsafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 14:44:33 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/04/02 15:53:06 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:36:22 by bsafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_var = 0;
 
 int	tablen(char **tab)
 {

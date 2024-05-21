@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: bsafi <bsafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 13:17:27 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/05/18 16:34:52 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/05/20 18:34:45 by bsafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,5 @@ int	export(t_stru *stru, t_cmd *cmd, int i, int j)
 		push_back_list(stru, export[0], export[1], 0);
 		i++;
 	}
-	return(0);
+	return (0);
 }

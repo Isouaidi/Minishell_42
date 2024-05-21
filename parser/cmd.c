@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isouaidi <isouaidi@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: bsafi <bsafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:34:20 by isouaidi          #+#    #+#             */
-/*   Updated: 2024/05/18 16:47:31 by isouaidi         ###   ########.fr       */
+/*   Updated: 2024/05/20 18:32:52 by bsafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 t_cmd	*list_to_cmd(t_pars *list, t_cmd *cmd, int i, int flag)
 {
 	t_cmd		*ncmd;
-	t_pars	*current;
-	t_pars	*pipe_start;
-	t_pars	*new_redirection;
+	t_pars		*current;
+	t_pars		*pipe_start;
+	t_pars		*new_redirection;
 	int			count;
 
 	ncmd = malloc(sizeof(t_cmd));
@@ -43,7 +43,7 @@ t_cmd	*list_to_cmd(t_pars *list, t_cmd *cmd, int i, int flag)
 int	count_l(t_pars *list, int flag)
 {
 	int			count;
-	t_pars	*current;
+	t_pars		*current;
 
 	count = 0;
 	current = list;
@@ -98,7 +98,7 @@ void	check_b(t_pars *list, t_cmd *cmd)
 		temp = temp->next;
 	}
 }
-
+/*
 void	prompt_cmd(t_cmd *cmd)
 {
 	int	i;
@@ -138,4 +138,4 @@ void	prompt_cmd(t_cmd *cmd)
 			cmd = cmd->next;
 		}
 	}
-}
+}*/
